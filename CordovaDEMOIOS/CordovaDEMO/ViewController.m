@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "CordovaViewController.h"
 
 @interface ViewController ()
 
@@ -26,4 +27,19 @@
 }
 
 
+- (IBAction)clickweb1:(id)sender {
+    
+    CordovaViewController *cdv1 = [[CordovaViewController alloc] init];
+    [self presentViewController:cdv1 animated:YES completion:nil];
+    
+}
+
+- (IBAction)clickweb2:(id)sender {
+}
+
+- (IBAction)clickdownload1:(id)sender {
+}
+
+- (IBAction)clickdownload2:(id)sender {
+}
 @end
