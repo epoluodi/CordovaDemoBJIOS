@@ -7,25 +7,44 @@
 //说明：该类作为 cordova webview  controller 的基础类。
 
 #import "CordovaViewController.h"
-
+#import "Plugin.h"
 @interface CordovaViewController ()
 
 @end
 
 @implementation CordovaViewController
-
+@synthesize HomeUrl;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.taobao.com" ]]];
+
+    
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:HomeUrl]]];
 }
 
 
 //重载基类中的插件处理方法。
 -(void)OnMessage:(NSString *)Action command:(CDVInvokedUrlCommand *)command
 {
+    NSLog(@"插件指令 %@",Action);
     
+    NSDictionary *arg;
+    if ([Action isEqualToString:CDV_NEWOPENWINDOWS])
+    {
+        arg = [command.arguments objectAtIndex:0];//获得参数信息
+
+        //TODO 由于插件回调是在线程中执行，对所有 UI线程操作需要回到  ui线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CordovaViewController *cdv1 = [[CordovaViewController alloc] init];
+            NSString *bundlepath = [[NSBundle mainBundle] bundlePath];
+            NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,[arg objectForKey:@"url"]];
+            cdv1.HomeUrl =homeurl;
+            [self presentViewController:cdv1 animated:YES completion:nil];
+        });
+        
+
+    }
 }
 
 - (void)didReceiveMemoryWarning {

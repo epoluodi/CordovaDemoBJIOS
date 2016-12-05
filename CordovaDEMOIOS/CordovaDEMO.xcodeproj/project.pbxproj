@@ -13,6 +13,8 @@
 		5C03C37A1DF06B030059A3FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C03C3781DF06B030059A3FB /* Main.storyboard */; };
 		5C03C37C1DF06B030059A3FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C03C37B1DF06B030059A3FB /* Assets.xcassets */; };
 		5C03C37F1DF06B030059A3FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C03C37D1DF06B030059A3FB /* LaunchScreen.storyboard */; };
+		5C2C36A01DF5A7E5000F0C2E /* pms in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C369F1DF5A7E5000F0C2E /* pms */; };
+		5C2C36A31DF5AD7E000F0C2E /* WebViewRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C36A21DF5AD7E000F0C2E /* WebViewRequest.m */; };
 		5C3A77031DF3CE870034A3E4 /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77021DF3CE870034A3E4 /* libCordova.a */; };
 		5C3A77051DF456890034A3E4 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5C3A77041DF456890034A3E4 /* config.xml */; };
 		5C3A77091DF45B1A0034A3E4 /* CordovaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3A77081DF45B1A0034A3E4 /* CordovaViewController.m */; };
@@ -54,6 +56,10 @@
 		5C03C3801DF06B030059A3FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C03C3851DF06B030059A3FB /* CordovaDEMOTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CordovaDEMOTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C03C3901DF06B030059A3FB /* CordovaDEMOUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CordovaDEMOUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C2C369F1DF5A7E5000F0C2E /* pms */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pms; sourceTree = "<group>"; };
+		5C2C36A11DF5AD7E000F0C2E /* WebViewRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewRequest.h; sourceTree = "<group>"; };
+		5C2C36A21DF5AD7E000F0C2E /* WebViewRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewRequest.m; sourceTree = "<group>"; };
+		5C2C36A41DF5ADEE000F0C2E /* Plugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Plugin.h; sourceTree = "<group>"; };
 		5C3A76E81DF3CE870034A3E4 /* CDV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDV.h; sourceTree = "<group>"; };
 		5C3A76E91DF3CE870034A3E4 /* CDVAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAvailability.h; sourceTree = "<group>"; };
 		5C3A76EA1DF3CE870034A3E4 /* CDVAvailabilityDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVAvailabilityDeprecated.h; sourceTree = "<group>"; };
@@ -146,6 +152,7 @@
 		5C03C36E1DF06B030059A3FB /* CordovaDEMO */ = {
 			isa = PBXGroup;
 			children = (
+				5C2C369F1DF5A7E5000F0C2E /* pms */,
 				5C3A77061DF457000034A3E4 /* Plugin */,
 				5C3A77041DF456890034A3E4 /* config.xml */,
 				5C3A76E51DF31E880034A3E4 /* Cordova */,
@@ -225,6 +232,9 @@
 		5C3A77061DF457000034A3E4 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				5C2C36A11DF5AD7E000F0C2E /* WebViewRequest.h */,
+				5C2C36A21DF5AD7E000F0C2E /* WebViewRequest.m */,
+				5C2C36A41DF5ADEE000F0C2E /* Plugin.h */,
 			);
 			path = Plugin;
 			sourceTree = "<group>";
@@ -349,6 +359,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C2C36A01DF5A7E5000F0C2E /* pms in Resources */,
 				5C03C37F1DF06B030059A3FB /* LaunchScreen.storyboard in Resources */,
 				5C03C37C1DF06B030059A3FB /* Assets.xcassets in Resources */,
 				5C03C37A1DF06B030059A3FB /* Main.storyboard in Resources */,
@@ -380,6 +391,7 @@
 				5C03C3771DF06B030059A3FB /* ViewController.m in Sources */,
 				5C03C3741DF06B030059A3FB /* AppDelegate.m in Sources */,
 				5C03C3711DF06B030059A3FB /* main.m in Sources */,
+				5C2C36A31DF5AD7E000F0C2E /* WebViewRequest.m in Sources */,
 				5C3A77091DF45B1A0034A3E4 /* CordovaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +544,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CordovaDEMO/Cordova",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yangxiaoguang.CordovaDEMO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -548,6 +561,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CordovaDEMO/Cordova",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yangxiaoguang.CordovaDEMO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

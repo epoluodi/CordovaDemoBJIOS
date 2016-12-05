@@ -30,6 +30,9 @@
 - (IBAction)clickweb1:(id)sender {
     
     CordovaViewController *cdv1 = [[CordovaViewController alloc] init];
+    NSString *bundlepath = [[NSBundle mainBundle] pathForResource:@"pms" ofType:@""];
+    NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,@"html/index.html"];
+    cdv1.HomeUrl =homeurl;
     [self presentViewController:cdv1 animated:YES completion:nil];
     
 }

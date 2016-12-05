@@ -10,5 +10,5 @@
 
 @interface CordovaViewController : CDVViewController
 
-
+@property (copy,nonatomic)NSString *HomeUrl;
 @end
