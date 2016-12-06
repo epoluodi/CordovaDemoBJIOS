@@ -24,6 +24,7 @@
 		5C3A77121DF45C4E0034A3E4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */; };
 		5C3A77141DF45C750034A3E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */; };
 		5C3A77161DF45C7C0034A3E4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */; };
+		B488ED7B1DF651EB00AC64C3 /* upload in Resources */ = {isa = PBXBuildFile; fileRef = B488ED7A1DF651EB00AC64C3 /* upload */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		B488ED7A1DF651EB00AC64C3 /* upload */ = {isa = PBXFileReference; lastKnownFileType = folder; path = upload; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		5C03C36E1DF06B030059A3FB /* CordovaDEMO */ = {
 			isa = PBXGroup;
 			children = (
+				B488ED7A1DF651EB00AC64C3 /* upload */,
 				5C2C369F1DF5A7E5000F0C2E /* pms */,
 				5C3A77061DF457000034A3E4 /* Plugin */,
 				5C3A77041DF456890034A3E4 /* config.xml */,
@@ -364,6 +367,7 @@
 				5C03C37C1DF06B030059A3FB /* Assets.xcassets in Resources */,
 				5C03C37A1DF06B030059A3FB /* Main.storyboard in Resources */,
 				5C3A77051DF456890034A3E4 /* config.xml in Resources */,
+				B488ED7B1DF651EB00AC64C3 /* upload in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

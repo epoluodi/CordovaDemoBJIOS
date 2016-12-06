@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A0C2B6FD67ED43B620241873892248C100EBDA58",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "1046e180-d2c0-4263-a5b6-2323772678c8++5326" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A0C2B6FD67ED43B620241873892248C100EBDA58" : 9223372036854775807,
+    "1046e180-d2c0-4263-a5b6-2323772678c8++5326" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "952537F5-A039-4B44-AE74-08045B9F2149",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A0C2B6FD67ED43B620241873892248C100EBDA58" : "CordovaDemoBJIOS\/",
+    "1046e180-d2c0-4263-a5b6-2323772678c8++5326" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CordovaDEMO",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CordovaDEMOIOS\/CordovaDEMO.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/115.29.41.197:3391",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1046e180-d2c0-4263-a5b6-2323772678c8++5326"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/epoluodi\/CordovaDemoBJIOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A0C2B6FD67ED43B620241873892248C100EBDA58"
+    }
+  ]
+}
