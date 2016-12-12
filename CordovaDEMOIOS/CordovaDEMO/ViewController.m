@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "CordovaViewController.h"
 
+
 @interface ViewController ()
 
 @end
@@ -17,6 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+  
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -30,11 +34,11 @@
 - (IBAction)clickweb1:(id)sender {
     
     CordovaViewController *cdv1 = [[CordovaViewController alloc] init];
-    NSString *bundlepath = [[NSBundle mainBundle] pathForResource:@"upload" ofType:@""];
-    NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,@"webapp-infomation-edit.html"];
+//    NSString *bundlepath = [[NSBundle mainBundle] pathForResource:@"upload" ofType:@""];
+//    NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,@"webapp-infomation-edit.html"];
     
-//    NSString *bundlepath = [[NSBundle mainBundle] pathForResource:@"pms" ofType:@""];
-//    NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,@"html/index.html"];
+    NSString *bundlepath = [[NSBundle mainBundle] pathForResource:@"pms" ofType:@""];
+    NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,@"html/index.html"];
     
     cdv1.HomeUrl =homeurl;
     [self presentViewController:cdv1 animated:YES completion:nil];

@@ -21,8 +21,25 @@
 
     
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:HomeUrl]]];
+    
+    //临时代码，集成后删除
+    UIButton *btnreturn = [[UIButton alloc] init];
+    btnreturn.frame = CGRectMake( [ UIScreen mainScreen ].bounds.size.width-90,  [ UIScreen mainScreen ].bounds.size.height -90, 80, 80);
+    btnreturn.layer.cornerRadius=40;
+    btnreturn.layer.masksToBounds=YES;
+    [btnreturn setTitle:@"返回" forState:UIControlStateNormal];
+    [btnreturn setBackgroundColor:[UIColor orangeColor]];
+    [btnreturn addTarget:self action:@selector(ClickReturn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnreturn];
+    
 }
 
+
+//关闭当前viewcontroll
+-(void)ClickReturn
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 //重载基类中的插件处理方法。
 -(void)OnMessage:(NSString *)Action command:(CDVInvokedUrlCommand *)command

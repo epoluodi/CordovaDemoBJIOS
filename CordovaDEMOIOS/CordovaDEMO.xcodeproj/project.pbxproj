@@ -24,6 +24,8 @@
 		5C3A77121DF45C4E0034A3E4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */; };
 		5C3A77141DF45C750034A3E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */; };
 		5C3A77161DF45C7C0034A3E4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */; };
+		5C8EE2A81DFEE7D000B0D512 /* HttpLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8EE2A71DFEE7D000B0D512 /* HttpLib.m */; };
+		5C8EE2AB1DFEEF5F00B0D512 /* AjaxRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8EE2AA1DFEEF5F00B0D512 /* AjaxRequest.m */; };
 		B488ED7B1DF651EB00AC64C3 /* upload in Resources */ = {isa = PBXBuildFile; fileRef = B488ED7A1DF651EB00AC64C3 /* upload */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +99,10 @@
 		5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5C8EE2A61DFEE7D000B0D512 /* HttpLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLib.h; sourceTree = "<group>"; };
+		5C8EE2A71DFEE7D000B0D512 /* HttpLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpLib.m; sourceTree = "<group>"; };
+		5C8EE2A91DFEEF5F00B0D512 /* AjaxRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AjaxRequest.h; sourceTree = "<group>"; };
+		5C8EE2AA1DFEEF5F00B0D512 /* AjaxRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AjaxRequest.m; sourceTree = "<group>"; };
 		B488ED7A1DF651EB00AC64C3 /* upload */ = {isa = PBXFileReference; lastKnownFileType = folder; path = upload; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,6 +176,8 @@
 				5C03C36F1DF06B030059A3FB /* Supporting Files */,
 				5C3A77071DF45B1A0034A3E4 /* CordovaViewController.h */,
 				5C3A77081DF45B1A0034A3E4 /* CordovaViewController.m */,
+				5C8EE2A61DFEE7D000B0D512 /* HttpLib.h */,
+				5C8EE2A71DFEE7D000B0D512 /* HttpLib.m */,
 			);
 			path = CordovaDEMO;
 			sourceTree = "<group>";
@@ -238,6 +246,8 @@
 				5C2C36A11DF5AD7E000F0C2E /* WebViewRequest.h */,
 				5C2C36A21DF5AD7E000F0C2E /* WebViewRequest.m */,
 				5C2C36A41DF5ADEE000F0C2E /* Plugin.h */,
+				5C8EE2A91DFEEF5F00B0D512 /* AjaxRequest.h */,
+				5C8EE2AA1DFEEF5F00B0D512 /* AjaxRequest.m */,
 			);
 			path = Plugin;
 			sourceTree = "<group>";
@@ -397,6 +407,8 @@
 				5C03C3711DF06B030059A3FB /* main.m in Sources */,
 				5C2C36A31DF5AD7E000F0C2E /* WebViewRequest.m in Sources */,
 				5C3A77091DF45B1A0034A3E4 /* CordovaViewController.m in Sources */,
+				5C8EE2A81DFEE7D000B0D512 /* HttpLib.m in Sources */,
+				5C8EE2AB1DFEEF5F00B0D512 /* AjaxRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

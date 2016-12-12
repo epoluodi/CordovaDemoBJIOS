@@ -49,19 +49,24 @@
 				});
 			}
 
-			function click2() {
-
-				stereo.ajax.post({
-					"url": "app/person/get",
-					"dataType": "json"
-				}, ajaxsuccess, null);
-			}
-
-			function ajaxsuccess(data) {
-				str = JSON.stringify(data);
-				alert(str);
-
-			}
+        function click2() {
+    
+				cdv.ajax.post({
+                              "url": "http://m.baidu.com",
+                              "params": "123"
+                              }, ajaxsuccess, ajaxfail);
+        }
+        
+        function ajaxsuccess(data) {
+            
+            alert(data);
+            
+        }
+        function ajaxfail(data) {
+            
+            alert(data);
+            
+        }
 		</script>
 
 </html>
