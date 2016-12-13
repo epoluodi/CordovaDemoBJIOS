@@ -38,4 +38,45 @@
     [datatask resume];
     
 }
+
+//文件下载
+-(void)HttpDownloadFile:(NSString *)fileurl filename:(NSString *)filename
+{
+    //1.创建会话对象
+    session = [NSURLSession sharedSession];
+    NSURL *_url = [NSURL URLWithString:fileurl];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_url];
+    
+    // 4.创建任务
+    downloadtask = [session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error == nil) {
+            // location:下载任务完成之后,文件存储的位置，这个路径默认是在tmp文件夹下!
+            // 只会临时保存，因此需要将其另存
+            NSLog(@"location:%@",location.path);
+            
+            
+            NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+            filePath =[filePath stringByAppendingPathComponent:filename];
+            NSLog(@"要保存的位置:%@",filePath);
+            NSError *fileError;
+           if ( [[NSFileManager defaultManager] fileExistsAtPath:filePath])
+           {
+               [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+           }
+            [[NSFileManager defaultManager] copyItemAtPath:location.path toPath:filePath error:&fileError];
+            if (fileError == nil) {
+                NSLog(@"file save success");
+            } else {
+                NSLog(@"file save error: %@",fileError);
+            }
+        } else {
+            NSLog(@"download error:%@",error);
+        }
+    }];
+    
+    // 5.开启任务
+    [downloadtask resume];
+    
+    
+}
 @end

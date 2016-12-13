@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "CordovaViewController.h"
+#import "HttpLib.h"
 
 
 @interface ViewController ()
@@ -49,6 +50,9 @@
 }
 
 - (IBAction)clickdownload1:(id)sender {
+    HttpLib *httplib = [[HttpLib alloc] init];
+    [httplib HttpDownloadFile:@"http://www.ishangban.com/pms/IOS_WEB.zip" filename:@"ios_web.zip"];
+    
 }
 
 - (IBAction)clickdownload2:(id)sender {

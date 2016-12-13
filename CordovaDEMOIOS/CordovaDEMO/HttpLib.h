@@ -27,4 +27,9 @@ typedef void (^HttpPostHandle)(NSData * data);
 //返回 请求得到的数据 通过nsdata 返回
 -(void)HttpPostRequest:(NSString *)url JSON:(NSString *)json complete:(HttpPostHandle)completedelegate;
 
+
+
+//文件下载
+-(void)HttpDownloadFile:(NSString *)fileurl filename:(NSString *)filename;
+
 @end
