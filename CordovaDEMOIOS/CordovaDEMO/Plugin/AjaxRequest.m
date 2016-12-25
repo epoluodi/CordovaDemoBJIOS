@@ -7,7 +7,7 @@
 //
 
 #import "AjaxRequest.h"
-#import "HttpLib.h"
+#import "HttpLib.h"//如果采用ASF 库 去掉该库
 
 @implementation AjaxRequest
 
@@ -23,10 +23,11 @@
             CDVPluginResult* pluginResult = nil;
             
             if (data)//获得到数据
-                pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+                pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];//成功
             else
-                pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"请求失败"];
+                pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"请求失败"];//失败
             
+            //回调给JS
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
         

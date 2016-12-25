@@ -12,7 +12,7 @@
 @implementation WebViewRequest
 
 
--(void)NEWOPENWINDOWS:(CDVInvokedUrlCommand *)command
+-(void)newOpen:(CDVInvokedUrlCommand *)command
 {
     CDVViewController *cdv = (CDVViewController *)self.viewController;
     [self.commandDelegate runInBackground:^{

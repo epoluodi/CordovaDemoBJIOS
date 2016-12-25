@@ -30,6 +30,9 @@
             <feature name="AjaxRequest">
                 <param name="ios-package" value="AjaxRequest" />
             </feature>
+            <feature name="iAppRevisionPlugin">
+                <param name="ios-package" value="iAppRevisionPlugin" />
+            </feature>
         </config-file>
 
     </platform>

@@ -13,7 +13,7 @@
 
 
 //新建窗口
--(void)NEWOPENWINDOWS:(CDVInvokedUrlCommand *)command;
+-(void)newOpen:(CDVInvokedUrlCommand *)command;
 
 
 @end

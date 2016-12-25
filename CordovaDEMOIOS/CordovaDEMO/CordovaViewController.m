@@ -8,6 +8,7 @@
 
 #import "CordovaViewController.h"
 #import "Plugin.h"
+
 @interface CordovaViewController ()
 
 @end
@@ -34,8 +35,13 @@
     
 }
 
+//自动旋转取消
+-(BOOL)shouldAutorotate
+{
+    return NO;
+}
 
-//关闭当前viewcontroll
+//关闭当前viewcontroll 临时
 -(void)ClickReturn
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -59,10 +65,30 @@
             cdv1.HomeUrl =homeurl;
             [self presentViewController:cdv1 animated:YES completion:nil];
         });
-        
+    }else if ([Action isEqualToString:CDV_SHOWSIGNVIEW])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SignView *signview= [[SignView alloc] init:self];
+            
+            [signview show:[command.callbackId copy]];
+        });
 
     }
 }
+
+#pragma mark SignDelegate
+
+-(void)signFinish:(NSString *)signUUID callbackID:(NSString *)callbackid
+{
+    NSLog(@"签名文件id %@",signUUID);
+    CDVPluginResult* pluginResult = nil;
+   
+    pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:signUUID];//成功
+    [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
+}
+
+#pragma mark -
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

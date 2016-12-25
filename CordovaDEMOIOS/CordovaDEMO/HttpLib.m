@@ -66,6 +66,8 @@
             [[NSFileManager defaultManager] copyItemAtPath:location.path toPath:filePath error:&fileError];
             if (fileError == nil) {
                 NSLog(@"file save success");
+                //解压
+                
             } else {
                 NSLog(@"file save error: %@",fileError);
             }

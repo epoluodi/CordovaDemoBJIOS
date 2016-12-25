@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "CordovaViewController.h"
 #import "HttpLib.h"
+#import "SignView.h"
+#import "iAppRevisionPlugin.h"
 
 
 @interface ViewController ()
@@ -20,7 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-  
+    //必须增加
+    [iAppRevisionPlugin iAppRevisionInit];
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -46,7 +49,16 @@
     
 }
 
+-(BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+
+
+
 - (IBAction)clickweb2:(id)sender {
+
 }
 
 - (IBAction)clickdownload1:(id)sender {

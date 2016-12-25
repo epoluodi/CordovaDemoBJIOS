@@ -24,6 +24,11 @@
 		5C3A77121DF45C4E0034A3E4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */; };
 		5C3A77141DF45C750034A3E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */; };
 		5C3A77161DF45C7C0034A3E4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */; };
+		5C5BAFB31E0D4EC900DB21EA /* KGBrushes.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C5BAFAD1E0D4EC900DB21EA /* KGBrushes.bundle */; };
+		5C5BAFB41E0D4EC900DB21EA /* libiAppRevision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5BAFB21E0D4EC900DB21EA /* libiAppRevision.a */; };
+		5C5BAFB71E0D4F7E00DB21EA /* iAppRevisionPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5BAFB61E0D4F7E00DB21EA /* iAppRevisionPlugin.m */; };
+		5C5BAFBA1E0D7BBD00DB21EA /* SignView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5BAFB91E0D7BBD00DB21EA /* SignView.m */; };
+		5C5BAFBC1E0E0BC000DB21EA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5BAFBB1E0E0BC000DB21EA /* libz.tbd */; };
 		5C8EE2A81DFEE7D000B0D512 /* HttpLib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8EE2A71DFEE7D000B0D512 /* HttpLib.m */; };
 		5C8EE2AB1DFEEF5F00B0D512 /* AjaxRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C8EE2AA1DFEEF5F00B0D512 /* AjaxRequest.m */; };
 		B488ED7B1DF651EB00AC64C3 /* upload in Resources */ = {isa = PBXBuildFile; fileRef = B488ED7A1DF651EB00AC64C3 /* upload */; };
@@ -99,6 +104,22 @@
 		5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5C5BAFA81E0D4EC900DB21EA /* iAppRevision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevision.h; sourceTree = "<group>"; };
+		5C5BAFA91E0D4EC900DB21EA /* iAppRevisionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevisionService.h; sourceTree = "<group>"; };
+		5C5BAFAA1E0D4EC900DB21EA /* iAppRevisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevisionView.h; sourceTree = "<group>"; };
+		5C5BAFAB1E0D4EC900DB21EA /* KGAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGAlertView.h; sourceTree = "<group>"; };
+		5C5BAFAC1E0D4EC900DB21EA /* KGBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGBase64.h; sourceTree = "<group>"; };
+		5C5BAFAD1E0D4EC900DB21EA /* KGBrushes.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KGBrushes.bundle; sourceTree = "<group>"; };
+		5C5BAFAE1E0D4EC900DB21EA /* KGBrushSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGBrushSettingView.h; sourceTree = "<group>"; };
+		5C5BAFAF1E0D4EC900DB21EA /* KGCategoryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGCategoryAdditions.h; sourceTree = "<group>"; };
+		5C5BAFB01E0D4EC900DB21EA /* KGMattsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGMattsView.h; sourceTree = "<group>"; };
+		5C5BAFB11E0D4EC900DB21EA /* KGTypeDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGTypeDefines.h; sourceTree = "<group>"; };
+		5C5BAFB21E0D4EC900DB21EA /* libiAppRevision.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiAppRevision.a; sourceTree = "<group>"; };
+		5C5BAFB51E0D4F7E00DB21EA /* iAppRevisionPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevisionPlugin.h; sourceTree = "<group>"; };
+		5C5BAFB61E0D4F7E00DB21EA /* iAppRevisionPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iAppRevisionPlugin.m; sourceTree = "<group>"; };
+		5C5BAFB81E0D7BBD00DB21EA /* SignView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignView.h; sourceTree = "<group>"; };
+		5C5BAFB91E0D7BBD00DB21EA /* SignView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignView.m; sourceTree = "<group>"; };
+		5C5BAFBB1E0E0BC000DB21EA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5C8EE2A61DFEE7D000B0D512 /* HttpLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLib.h; sourceTree = "<group>"; };
 		5C8EE2A71DFEE7D000B0D512 /* HttpLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpLib.m; sourceTree = "<group>"; };
 		5C8EE2A91DFEEF5F00B0D512 /* AjaxRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AjaxRequest.h; sourceTree = "<group>"; };
@@ -111,6 +132,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C5BAFBC1E0E0BC000DB21EA /* libz.tbd in Frameworks */,
+				5C5BAFB41E0D4EC900DB21EA /* libiAppRevision.a in Frameworks */,
 				5C3A77161DF45C7C0034A3E4 /* MobileCoreServices.framework in Frameworks */,
 				5C3A77141DF45C750034A3E4 /* CoreTelephony.framework in Frameworks */,
 				5C3A77121DF45C4E0034A3E4 /* QuartzCore.framework in Frameworks */,
@@ -243,6 +266,7 @@
 		5C3A77061DF457000034A3E4 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				5C5BAFA61E0D4EC900DB21EA /* iAppRevision */,
 				5C2C36A11DF5AD7E000F0C2E /* WebViewRequest.h */,
 				5C2C36A21DF5AD7E000F0C2E /* WebViewRequest.m */,
 				5C2C36A41DF5ADEE000F0C2E /* Plugin.h */,
@@ -255,6 +279,7 @@
 		5C3A770A1DF45C260034A3E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5C5BAFBB1E0E0BC000DB21EA /* libz.tbd */,
 				5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */,
 				5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */,
 				5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */,
@@ -263,6 +288,36 @@
 				5C3A770B1DF45C270034A3E4 /* AssetsLibrary.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5C5BAFA61E0D4EC900DB21EA /* iAppRevision */ = {
+			isa = PBXGroup;
+			children = (
+				5C5BAFA71E0D4EC900DB21EA /* lib */,
+				5C5BAFB51E0D4F7E00DB21EA /* iAppRevisionPlugin.h */,
+				5C5BAFB61E0D4F7E00DB21EA /* iAppRevisionPlugin.m */,
+				5C5BAFB81E0D7BBD00DB21EA /* SignView.h */,
+				5C5BAFB91E0D7BBD00DB21EA /* SignView.m */,
+			);
+			path = iAppRevision;
+			sourceTree = "<group>";
+		};
+		5C5BAFA71E0D4EC900DB21EA /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				5C5BAFA81E0D4EC900DB21EA /* iAppRevision.h */,
+				5C5BAFA91E0D4EC900DB21EA /* iAppRevisionService.h */,
+				5C5BAFAA1E0D4EC900DB21EA /* iAppRevisionView.h */,
+				5C5BAFAB1E0D4EC900DB21EA /* KGAlertView.h */,
+				5C5BAFAC1E0D4EC900DB21EA /* KGBase64.h */,
+				5C5BAFAD1E0D4EC900DB21EA /* KGBrushes.bundle */,
+				5C5BAFAE1E0D4EC900DB21EA /* KGBrushSettingView.h */,
+				5C5BAFAF1E0D4EC900DB21EA /* KGCategoryAdditions.h */,
+				5C5BAFB01E0D4EC900DB21EA /* KGMattsView.h */,
+				5C5BAFB11E0D4EC900DB21EA /* KGTypeDefines.h */,
+				5C5BAFB21E0D4EC900DB21EA /* libiAppRevision.a */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +432,7 @@
 				5C03C37C1DF06B030059A3FB /* Assets.xcassets in Resources */,
 				5C03C37A1DF06B030059A3FB /* Main.storyboard in Resources */,
 				5C3A77051DF456890034A3E4 /* config.xml in Resources */,
+				5C5BAFB31E0D4EC900DB21EA /* KGBrushes.bundle in Resources */,
 				B488ED7B1DF651EB00AC64C3 /* upload in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +465,8 @@
 				5C3A77091DF45B1A0034A3E4 /* CordovaViewController.m in Sources */,
 				5C8EE2A81DFEE7D000B0D512 /* HttpLib.m in Sources */,
 				5C8EE2AB1DFEEF5F00B0D512 /* AjaxRequest.m in Sources */,
+				5C5BAFBA1E0D7BBD00DB21EA /* SignView.m in Sources */,
+				5C5BAFB71E0D4F7E00DB21EA /* iAppRevisionPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,10 +613,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RK2BTW6E76;
 				INFOPLIST_FILE = CordovaDEMO/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CordovaDEMO/Cordova",
+					"$(PROJECT_DIR)/CordovaDEMO/Plugin/iAppRevision/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yangxiaoguang.CordovaDEMO;
@@ -572,10 +632,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RK2BTW6E76;
 				INFOPLIST_FILE = CordovaDEMO/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CordovaDEMO/Cordova",
+					"$(PROJECT_DIR)/CordovaDEMO/Plugin/iAppRevision/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yangxiaoguang.CordovaDEMO;
