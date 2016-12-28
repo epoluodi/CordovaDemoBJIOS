@@ -8,11 +8,12 @@
 
 #import "SignView.h"
 #import "KGAlertView.h"
+#import "iAppRevisionService.h"
 
 @implementation SignView
+@synthesize serverData;
 
-
--(instancetype)init:(UIViewController *)viewcontroller
+-(instancetype)init:(UIViewController<SignDelegate> *)viewcontroller
 {
     self = [super init];
     blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
@@ -131,6 +132,33 @@
 }
 
 
+-(void)uploadData:(NSData *)signdata signatureRect:(CGRect)signatureRect uuid:(NSString *)uuid
+{
+    iAppRevisionService *_server = [iAppRevisionService service];
+    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"fieldName"] fieldName:[serverData objectForKey:@"userName"] success:^(NSString *fieldValue) {
+        
+        NSString *fieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:fieldValue];
+        if (!fieldValue)
+        {
+            //返回空
+            [_viewcontroller uploadError:@"组织签批数据为空" callbackID:_callbackID];
+            return ;
+        }
+        
+        NSDateFormatter *df= [[NSDateFormatter alloc] init];
+        df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+        NSString *dt = [df stringFromDate:[NSDate date]];
+        [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldvalue dateTime:dt success:^(NSString *message) {
+               [_viewcontroller signFinish:uuid callbackID:_callbackID];
+        } failure:^(NSError *error) {
+              [_viewcontroller uploadError:error.description callbackID:_callbackID];
+        }];
+        
+        
+    } failure:^(NSError *error) {
+        [_viewcontroller uploadError:error.description callbackID:_callbackID];
+    }];
+}
 
 
 

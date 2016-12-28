@@ -87,6 +87,14 @@
     [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
 }
 
+-(void)uploadError:(NSString *)errdesc callbackID:(NSString *)callbackid
+{
+    NSLog(@" 失败原因 %@",errdesc);
+    CDVPluginResult* pluginResult = nil;
+    
+    pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errdesc];//成功
+    [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
+}
 #pragma mark -
 
 

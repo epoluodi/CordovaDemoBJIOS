@@ -11,6 +11,7 @@
 #import "HttpLib.h"
 #import "SignView.h"
 #import "iAppRevisionPlugin.h"
+#import "iAppRevisionService.h"
 
 
 @interface ViewController ()
@@ -24,6 +25,9 @@
     
     //必须增加
     [iAppRevisionPlugin iAppRevisionInit];
+    
+    //必须增加初始化
+    [iAppRevisionService service];
     
     // Do any additional setup after loading the view, typically from a nib.
 }

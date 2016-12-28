@@ -16,6 +16,8 @@
 // 返回回调js 的id
 -(void)signFinish:(NSString *)signUUID callbackID:(NSString *)callbackid;
 
+//失败回调
+-(void)uploadError:(NSString *)errdesc callbackID:(NSString *)callbackid;
 @end
 @interface SignView : UIView
 {
@@ -37,7 +39,7 @@
     NSString *_callbackID;
 }
 
-
+@property (copy,nonatomic)NSDictionary *serverData;//初始化数据
 //初始化 传入加载窗口的viewcontroller 目前针对webviewcontroller
 -(instancetype)init:(UIViewController<SignDelegate> *)viewcontroller;
 

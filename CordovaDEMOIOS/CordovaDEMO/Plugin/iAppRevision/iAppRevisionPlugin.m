@@ -8,6 +8,7 @@
 
 #import "iAppRevisionPlugin.h"
 #import "CDVViewController.h"
+#import "iAppRevisionService.h"
 
 
 @implementation iAppRevisionPlugin
@@ -28,6 +29,8 @@
         [cdv OnMessage:CDV_SHOWSIGNVIEW command:command];
     }];
 }
+
+
 
 
 @end

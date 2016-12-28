@@ -1,5 +1,5 @@
 //fengxf added begin:
-cordova.define("com.example.yangxiaoguang.cordovademo.Cordova.Plugin.iAppRevision", function(require,exports,module){
+cordova.define("com.Cordova.Plugin.iAppRevision", function(require,exports,module){
 
     var exec = require('cordova/exec');
 
@@ -14,9 +14,9 @@ cordova.define("com.example.yangxiaoguang.cordovademo.Cordova.Plugin.iAppRevisio
 		 */
 		
         //显示签名手写板
-		showSign: function(jsonparams,getRequestHeaderCallBack) {
+		showSign: function(jsonparams,getRequestHeaderCallBack,getRequestHeaderCallBackerror) {
 
-              exec(getRequestHeaderCallBack, null, "iAppRevisionPlugin", "showSign", [jsonparams]);
+              exec(getRequestHeaderCallBack, getRequestHeaderCallBackerror, "iAppRevisionPlugin", "showSign", [jsonparams]);
         },
 
     };

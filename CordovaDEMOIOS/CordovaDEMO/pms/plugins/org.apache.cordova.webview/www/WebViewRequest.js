@@ -1,7 +1,7 @@
 //fengxf added begin:
 
 //TODO 集成后，这个定义需要更改成当前包的定义
-cordova.define("com.example.yangxiaoguang.cordovademo.Cordova.Plugin.WebViewRequest", function(require,exports,module){
+cordova.define("com.Cordova.Plugin.WebViewRequest", function(require,exports,module){
 
     var exec = require('cordova/exec');
 

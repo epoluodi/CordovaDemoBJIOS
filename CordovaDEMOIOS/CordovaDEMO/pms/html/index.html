@@ -43,10 +43,14 @@
 
 			function click1() {
 				//调用js 打开一个新窗口
-				cdv.webview.open({
+				cdv.webview.open(
+                {
 					//参数url地址，指向一个新地址
-					"url": "/pms/html/index.html"
-				});
+				
+                                 "url": "/pms/html/index.html"
+				}
+                                 
+                                 );
 			}
 
         function click2() {
@@ -73,12 +77,21 @@
         function click3()
         {
             cdv.sign.showSign(
-                {"111":"111"},
-                signCallback
+                {
+                              "webService":"111",//未定义
+                              "recordID":"111",//文档记录号
+                              "fieldName":"111",//签名区域名称
+                              "userName":"111"
+                },
+                signCallback,signCallbackerror
             );
         }
         
         function signCallback(json)
+        {
+            alert(json);
+        }
+        function signCallbackerror(json)
         {
             alert(json);
         }

@@ -15,8 +15,7 @@
 
 +(void)iAppRevisionInit;//初始化SDK
 
--(void)showSign:(CDVInvokedUrlCommand *)command;
-
+-(void)showSign:(CDVInvokedUrlCommand *)command;//显示签名手写板
 
 
 
