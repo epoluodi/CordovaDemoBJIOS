@@ -126,7 +126,8 @@
         NSLog(@"保存地址 %@",filepath);
         NSData *imgdata = UIImagePNGRepresentation(signatureImage);
         [imgdata writeToFile:filepath atomically:YES];
-        [_viewcontroller signFinish:uuid callbackID:_callbackID];
+//        [_viewcontroller signFinish:uuid callbackID:_callbackID];
+        [self uploadData:imgdata signatureRect:signatureRect uuid:uuid];
         [self close];
     }];
 }
@@ -135,29 +136,38 @@
 -(void)uploadData:(NSData *)signdata signatureRect:(CGRect)signatureRect uuid:(NSString *)uuid
 {
     iAppRevisionService *_server = [iAppRevisionService service];
-    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"fieldName"] fieldName:[serverData objectForKey:@"userName"] success:^(NSString *fieldValue) {
-        
-        NSString *fieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:fieldValue];
-        if (!fieldValue)
-        {
-            //返回空
-            [_viewcontroller uploadError:@"组织签批数据为空" callbackID:_callbackID];
-            return ;
-        }
-        
-        NSDateFormatter *df= [[NSDateFormatter alloc] init];
-        df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-        NSString *dt = [df stringFromDate:[NSDate date]];
-        [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldvalue dateTime:dt success:^(NSString *message) {
-               [_viewcontroller signFinish:uuid callbackID:_callbackID];
-        } failure:^(NSError *error) {
-              [_viewcontroller uploadError:error.description callbackID:_callbackID];
-        }];
-        
-        
+//    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"fieldName"] fieldName:[serverData objectForKey:@"userName"] success:^(NSString *fieldValue) {
+//        
+//        
+//        NSLog(@"查询到");
+//        
+//    } failure:^(NSError *error) {
+//     
+//        
+//        NSString *err = error.description;
+//        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+//        NSData *_errdata = [err dataUsingEncoding:encoding];
+//           [_viewcontroller uploadError:[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding] callbackID:_callbackID];
+//    }];
+    
+    NSString *fieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:nil];
+    if (!fieldvalue)
+    {
+        //返回空
+        [_viewcontroller uploadError:@"组织签批数据为空" callbackID:_callbackID];
+        return ;
+    }
+    
+    NSDateFormatter *df= [[NSDateFormatter alloc] init];
+    df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSString *dt = [df stringFromDate:[NSDate date]];
+    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldvalue dateTime:dt success:^(NSString *message) {
+        [_viewcontroller signFinish:uuid callbackID:_callbackID];
     } failure:^(NSError *error) {
         [_viewcontroller uploadError:error.description callbackID:_callbackID];
     }];
+    
+    
 }
 
 
