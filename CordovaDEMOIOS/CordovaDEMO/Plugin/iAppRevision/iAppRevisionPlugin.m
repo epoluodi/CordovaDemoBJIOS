@@ -30,7 +30,30 @@
     }];
 }
 
+-(void)loadSign:(CDVInvokedUrlCommand *)command
+{
+    [self.commandDelegate runInBackground:^{
+        NSString * arg = [command.arguments objectAtIndex:0];//获得参数信息
+        NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
 
+        iAppRevisionService *_server = [iAppRevisionService service];
+        [_server loadSignatureWithWebService:[_jsondata objectForKey:@"webService"] recordID:[_jsondata objectForKey:@"recordID"] userName:[_jsondata objectForKey:@"fieldName"] fieldName:[_jsondata objectForKey:@"userName"] success:^(NSString *fieldValue) {
+            
+            
+            NSLog(@"查询到 %@",fieldValue);
+            
+        } failure:^(NSError *error) {
+            
+            
+            NSString *err = error.description;
+            NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+            NSData *_errdata = [err dataUsingEncoding:encoding];
+            
+            NSLog(@"数据 %@",[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding]);
+        }];
+
+    }];
+}
 
 
 @end

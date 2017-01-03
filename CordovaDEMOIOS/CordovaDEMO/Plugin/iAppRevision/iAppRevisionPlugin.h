@@ -17,6 +17,6 @@
 
 -(void)showSign:(CDVInvokedUrlCommand *)command;//显示签名手写板
 
-
+-(void)loadSign:(CDVInvokedUrlCommand *)command;
 
 @end
