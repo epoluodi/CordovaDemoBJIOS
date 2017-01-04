@@ -18,7 +18,11 @@ cordova.define("com.Cordova.Plugin.iAppRevision", function(require,exports,modul
 
               exec(getRequestHeaderCallBack, getRequestHeaderCallBackerror, "iAppRevisionPlugin", "showSign", [jsonparams]);
         },
-
+        loadSign: function(jsonparams,getRequestHeaderCallBack,getRequestHeaderCallBackerror) {
+               
+        exec(getRequestHeaderCallBack, getRequestHeaderCallBackerror, "iAppRevisionPlugin", "loadSign", [jsonparams]);
+        },
+               
     };
 
 });

@@ -70,8 +70,8 @@
         arg = [command.arguments objectAtIndex:0];//获得参数信息
         dispatch_async(dispatch_get_main_queue(), ^{
             SignView *signview= [[SignView alloc] init:self];
-            NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-            signview.serverData = _jsondata;
+//            NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+            signview.serverData = arg;
             [signview show:[command.callbackId copy]];
         });
 

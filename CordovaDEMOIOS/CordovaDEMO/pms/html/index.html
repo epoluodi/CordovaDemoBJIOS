@@ -32,6 +32,7 @@
 		<a class="long_button" onclick="click1()">新窗口</a>
 		<a class="long_button" onclick="click2()">Post</a>
         <a class="long_button" onclick="click3()">签名</a>
+        <a class="long_button" onclick="click4()">读取签批数据</a>
 		<script src="../cordova.js" type="text/javascript"></script>
 		<script src="../js/jquery-2.1.1.js" type="text/javascript"></script>
 		<script>
@@ -78,10 +79,10 @@
         {
             cdv.sign.showSign(
                 {
-                              "webService":"111",//未定义
-                              "recordID":"111",//文档记录号
-                              "fieldName":"111",//签名区域名称
-                              "userName":"111"
+                              "webService":"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp",//未定义
+                              "recordID":"201701041129",//文档记录号
+                              "fieldName":"SendOut",//签名区域名称
+                              "userName":"wanghr"
                 },
                 signCallback,signCallbackerror
             );
@@ -95,6 +96,22 @@
         {
             alert(json);
         }
+        
+        
+        function click4()
+        {
+            cdv.sign.loadSign(
+                              {
+                              "webService":"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp",//未定义
+                              "recordID":"201701041129",//文档记录号
+                              "fieldName":"SendOut",//签名区域名称
+                              "userName":"wanghr"
+                              },
+                              signCallback,signCallbackerror
+                              );
+        }
+        
+        
 		</script>
 
 </html>

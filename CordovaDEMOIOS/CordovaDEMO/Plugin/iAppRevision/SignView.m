@@ -161,8 +161,9 @@
     NSDateFormatter *df= [[NSDateFormatter alloc] init];
     df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dt = [df stringFromDate:[NSDate date]];
-    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldvalue dateTime:dt success:^(NSString *message) {
+    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldvalue dateTime:dt extractImage:YES  success:^(NSString *message) {
         [_viewcontroller signFinish:uuid callbackID:_callbackID];
+        [self loadSignatureWithRecordID:[serverData objectForKey:@"recordID"]];
     } failure:^(NSError *error) {
         [_viewcontroller uploadError:error.description callbackID:_callbackID];
     }];
@@ -172,7 +173,19 @@
 
 
 
-
+- (void)loadSignatureWithRecordID:(NSString *)recordID {
+    
+    [[iAppRevisionService service] loadSignatureWithWebService:@"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp" recordID:recordID userName:@"admin" fieldName:@"SendOut" success:^(NSString *fieldValue) {
+        
+        NSArray *fieldValues = [[iAppRevisionService service]  fieldValuesWithValue:fieldValue  ];
+        NSLog(@"fieldValues: %@", fieldValues);
+        
+    }failure:^(NSError *error) {
+        
+        NSString *e = [NSString stringWithCString:[[error.userInfo objectForKey:NSLocalizedDescriptionKey] cStringUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)] encoding:NSUTF8StringEncoding];
+        NSLog(@"error: %@", e);
+    }];
+}
 
 
 
