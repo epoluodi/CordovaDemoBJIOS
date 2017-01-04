@@ -38,9 +38,9 @@
     __block  NSDictionary *result;
     [self.commandDelegate runInBackground:^{
         NSDictionary * arg = [command.arguments objectAtIndex:0];//获得参数信息
-//        NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-
-//        iAppRevisionService *_server = [iAppRevisionService service];
+        NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+        arg = _jsondata;
+        
         [iAppRevisionPlugin iAppRevisionInit];
         [[iAppRevisionService service] loadSignatureWithWebService:[arg objectForKey:@"webService"] recordID:[arg objectForKey:@"recordID"] userName:[arg objectForKey:@"userName"] fieldName:[arg objectForKey:@"fieldName"] success:^(NSString *fieldValue) {
             
