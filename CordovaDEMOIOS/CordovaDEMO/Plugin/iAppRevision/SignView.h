@@ -37,6 +37,7 @@
     UIButton *btnSave;  // 保存
     
     NSString *_callbackID;
+    NSString *fileuuid;//签名图片uuid
 }
 
 @property (copy,nonatomic)NSDictionary *serverData;//初始化数据

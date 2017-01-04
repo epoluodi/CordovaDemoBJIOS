@@ -123,69 +123,80 @@
 
         NSString *uuid = [[NSUUID UUID] UUIDString];
         NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
+        fileuuid =uuid;
         NSLog(@"保存地址 %@",filepath);
         NSData *imgdata = UIImagePNGRepresentation(signatureImage);
         [imgdata writeToFile:filepath atomically:YES];
 //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
-        [self uploadData:imgdata signatureRect:signatureRect uuid:uuid];
+        [self uploadData:imgdata signatureRect:signatureRect];
         [self close];
     }];
 }
 
 
--(void)uploadData:(NSData *)signdata signatureRect:(CGRect)signatureRect uuid:(NSString *)uuid
-{
+-(void)uploadData:(NSData *)signdata signatureRect:(CGRect)signatureRect{
     iAppRevisionService *_server = [iAppRevisionService service];
-//    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"fieldName"] fieldName:[serverData objectForKey:@"userName"] success:^(NSString *fieldValue) {
-//        
-//        
-//        NSLog(@"查询到 %@",fieldValue);
-//        
-//    } failure:^(NSError *error) {
-//     
-//        
-//        NSString *err = error.description;
-//        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//        NSData *_errdata = [err dataUsingEncoding:encoding];
-//           [_viewcontroller uploadError:[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding] callbackID:_callbackID];
-//    }];
-    
-    NSString *fieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:nil];
-    if (!fieldvalue)
+    __weak __typeof(self) weakself= self;
+    if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"0"])//没有原始数据
     {
-        //返回空
-        [_viewcontroller uploadError:@"组织签批数据为空" callbackID:_callbackID];
-        return ;
+        //生成新的签批数据
+        NSString *fieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:nil];
+        if (!fieldvalue)
+        {
+            //返回空
+            [_viewcontroller uploadError:@"组织签批数据为空" callbackID:_callbackID];
+            return ;
+        }
+        
+        [weakself saveSignData:fieldvalue];//保存签批数据
+        return;
     }
     
+    
+    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] success:^(NSString *fieldValue) {
+        
+        if (!fieldValue)
+        {
+            //返回空
+            [_viewcontroller uploadError:@"原始签批数据读取失败" callbackID:_callbackID];
+            return ;
+        }
+        NSString *newfieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:fieldValue];
+        if (!newfieldvalue)
+        {
+            //返回空
+            [_viewcontroller uploadError:@"组织签批数据为空" callbackID:_callbackID];
+            return ;
+        }
+        [weakself saveSignData:newfieldvalue];//保存签批数据
+        
+    } failure:^(NSError *error) {
+        //获取原始签批数据失败
+        NSString *err = error.description;
+        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSData *_errdata = [err dataUsingEncoding:encoding];
+           [_viewcontroller uploadError:[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding] callbackID:_callbackID];
+    }];
+    
+}
+
+
+//保存签批数据
+-(void)saveSignData:(NSString *)fieldValue
+{
+    iAppRevisionService *_server = [iAppRevisionService service];
     NSDateFormatter *df= [[NSDateFormatter alloc] init];
     df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dt = [df stringFromDate:[NSDate date]];
-    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldvalue dateTime:dt extractImage:YES  success:^(NSString *message) {
-        [_viewcontroller signFinish:uuid callbackID:_callbackID];
-        [self loadSignatureWithRecordID:[serverData objectForKey:@"recordID"]];
+    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt extractImage:YES  success:^(NSString *message) {
+        [_viewcontroller signFinish:fileuuid callbackID:_callbackID];
     } failure:^(NSError *error) {
         [_viewcontroller uploadError:error.description callbackID:_callbackID];
     }];
-    
-    
+
 }
 
 
-
-- (void)loadSignatureWithRecordID:(NSString *)recordID {
-    
-    [[iAppRevisionService service] loadSignatureWithWebService:@"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp" recordID:recordID userName:@"admin" fieldName:@"SendOut" success:^(NSString *fieldValue) {
-        
-        NSArray *fieldValues = [[iAppRevisionService service]  fieldValuesWithValue:fieldValue  ];
-        NSLog(@"fieldValues: %@", fieldValues);
-        
-    }failure:^(NSError *error) {
-        
-        NSString *e = [NSString stringWithCString:[[error.userInfo objectForKey:NSLocalizedDescriptionKey] cStringUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)] encoding:NSUTF8StringEncoding];
-        NSLog(@"error: %@", e);
-    }];
-}
 
 
 

@@ -80,9 +80,10 @@
             cdv.sign.showSign(
                 {
                               "webService":"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp",//未定义
-                              "recordID":"201701041129",//文档记录号
+                              "recordID":"201701041829",//文档记录号
                               "fieldName":"SendOut",//签名区域名称
-                              "userName":"wanghr"
+                              "userName":"wanghr", //签批用户
+                              "haveFieldValue":"1"  //是否检查原始签批数据 1 检查 0 不检查
                 },
                 signCallback,signCallbackerror
             );
@@ -103,15 +104,19 @@
             cdv.sign.loadSign(
                               {
                               "webService":"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp",//未定义
-                              "recordID":"201701041129",//文档记录号
+                              "recordID":"201701041829",//文档记录号
                               "fieldName":"SendOut",//签名区域名称
                               "userName":"wanghr"
                               },
-                              signCallback,signCallbackerror
+                              loadsignCallback
                               );
         }
         
         
+        function loadsignCallback(json)
+        {
+            alert(json);
+        }
 		</script>
 
 </html>

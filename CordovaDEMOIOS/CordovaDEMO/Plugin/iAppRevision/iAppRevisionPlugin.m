@@ -9,7 +9,7 @@
 #import "iAppRevisionPlugin.h"
 #import "CDVViewController.h"
 #import "iAppRevisionService.h"
-#import "iAppRevisionPlugin.h"
+
 
 
 @implementation iAppRevisionPlugin
@@ -33,36 +33,64 @@
 
 -(void)loadSign:(CDVInvokedUrlCommand *)command
 {
+   __block CDVPluginResult* pluginResult = nil;
+    __weak __typeof(self) weakself= self;
+    __block  NSDictionary *result;
     [self.commandDelegate runInBackground:^{
         NSDictionary * arg = [command.arguments objectAtIndex:0];//获得参数信息
 //        NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
 
 //        iAppRevisionService *_server = [iAppRevisionService service];
         [iAppRevisionPlugin iAppRevisionInit];
-        [[iAppRevisionService service] loadSignatureWithWebService:@"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp" recordID:[arg objectForKey:@"recordID"] userName:@"admin" fieldName:@"SendOut" success:^(NSString *fieldValue) {
+        [[iAppRevisionService service] loadSignatureWithWebService:[arg objectForKey:@"webService"] recordID:[arg objectForKey:@"recordID"] userName:[arg objectForKey:@"userName"] fieldName:[arg objectForKey:@"fieldName"] success:^(NSString *fieldValue) {
             
             NSArray *fieldValues = [[iAppRevisionService service]  fieldValuesWithValue:fieldValue  ];
             NSLog(@"fieldValues: %@", fieldValues);
+            
+            if (!fieldValues || fieldValues.count==0)
+            {
+                result = @{@"state":@"1",@"desc":@"获取签批数据失败"};
+                pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];//成功
+                [ weakself.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                return ;
+            }
+            NSMutableArray *files=[[NSMutableArray alloc] init];
+            
+            for (int i=1; i<fieldValues.count; i++) {
+                NSDictionary *_d =fieldValues[i];
+                //读取图片文件
+                NSString *imgbase64 = [_d objectForKey: [arg objectForKey:@"userName"]];
+                NSData *imgdata =[[iAppRevisionService service] imageDataWithBase64String:imgbase64];
+                
+                NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+                NSString *cachePath = [cacPath objectAtIndex:0];
+                
+                NSString *uuid = [[NSUUID UUID] UUIDString];
+                NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
+              
+                NSLog(@"保存地址 %@",filepath);
+                [imgdata writeToFile:filepath atomically:YES];
+                
+                [files addObject:filepath];
+                
+            }
+            
+            
+           //回调
+            result = @{@"state":@"0",@"desc":@"",@"data":files};
+            pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];//成功
+            [ weakself.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             
         }failure:^(NSError *error) {
             
             NSString *e = [NSString stringWithCString:[[error.userInfo objectForKey:NSLocalizedDescriptionKey] cStringUsingEncoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)] encoding:NSUTF8StringEncoding];
             NSLog(@"error: %@", e);
+            
+            //回调
+            result = @{@"state":@"1",@"desc":e.description};
+            pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];//成功
+            [ weakself.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
-        
-        
-//        [_server loadSignatureWithWebService:[arg objectForKey:@"webService"] recordID:[arg objectForKey:@"recordID"] userName:[arg objectForKey:@"fieldName"] fieldName:[arg objectForKey:@"userName"] success:^(NSString *fieldValue) {
-//            
-//            
-//            NSLog(@"查询到 %@",fieldValue);
-//            
-//        } failure:^(NSError *error) {
-//            NSString *err = error.description;
-//            NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//            NSData *_errdata = [err dataUsingEncoding:encoding];
-//            
-//            NSLog(@"数据 %@",[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding]);
-//        }];
 
     }];
 }
