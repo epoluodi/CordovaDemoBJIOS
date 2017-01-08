@@ -38,8 +38,9 @@
 		<script>
 			document.addEventListener("deviceready", onDeviceReady, false);
 
-			function onDeviceReady() {
 
+			function onDeviceReady() {
+          
 			}
 
 			function click1() {
@@ -79,11 +80,11 @@
         {
             cdv.sign.showSign(
                 {
-                              "webService":"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp",//未定义
-                              "recordID":"201701041829",//文档记录号
-                              "fieldName":"SendOut",//签名区域名称
-                              "userName":"wanghr", //签批用户
-                              "haveFieldValue":"1"  //是否检查原始签批数据 1 检查 0 不检查
+                              "webService":"http://220.194.33.92:7001/defaultroot/iWebRevisionServlet",//未定义
+                              "recordID":"201701071940",//文档记录号
+                              "fieldName":"SendOut201701071940",//签名区域名称
+                              "userName":"liuj0315",
+                              "haveFieldValue":"0"  //是否检查原始签批数据 1 检查 0 不检查
                 },
                 signCallback,signCallbackerror
             );
@@ -98,15 +99,15 @@
             alert(json);
         }
         
-        
+
         function click4()
         {
             cdv.sign.loadSign(
                               {
-                              "webService":"http://oa.goldgrid.com:88/iWebRevisionEx/iWebServer.jsp",//未定义
-                              "recordID":"201701041829",//文档记录号
-                              "fieldName":"SendOut",//签名区域名称
-                              "userName":"wanghr"
+                              "webService":"http://220.194.33.92:7001/defaultroot/iWebRevisionServlet",//未定义
+                              "recordID":"201701071940",//文档记录号
+                              "fieldName":"SendOut201701071940",//签名区域名称
+                              "userName":"liuj0315"
                               },
                               loadsignCallback
                               );
