@@ -6,11 +6,20 @@
 //  Copyright (c) 2015年 com.kinggrid. All rights reserved.
 //
 
-/*
- * 更新于：2016-11-07
+/** iAppRevision开发包版本更新信息
+ *
+ * 版本：3.1.0.216
+ * 日期：2017-02-09
+ */
+
+/** 文件更新信息
+ *
+ * 更新于：2016-12-26
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @class KGAuthorization;
 
@@ -28,9 +37,59 @@
 + (instancetype)sharedInstance;
 
 /** 注册App
- * @param key : 授权码
+ * @param key 授权码
  */
 + (void)registerApp:(NSString *)key;
+
+/** 获取两个Rect的并集 
+ * @param rect1 区域1
+ * @param rect2 区域2
+ *
+ * @return 并集区域
+ */
++ (CGRect)rectByUnion:(CGRect)rect1 withRect:(CGRect)rect2;
+
+/** 将十六进制颜色的字符串转为UIColor
+ *
+ * @param hexadecimal 十六进制颜色的字符串
+ * @param alpha 渲染值
+ *
+ * @return UIColor
+ */
++ (UIColor *)colorWithHexadecimal:(NSString *)hexadecimal alpha:(CGFloat)alpha;
+
+/** 获取合成图片
+ * @param image 图片1
+ * @param imageRect 图片1的合成位置
+ * @param otherImage 图片2
+ * @param otherImageRect 图片2的合成位置
+ * @param inRect 合成区域
+ *
+ * @return 合成图片
+ */
++ (UIImage *)imageByCompound:(UIImage *)image withRect:(CGRect)imageRect otherImage:(UIImage *)otherImage otherRect:(CGRect)otherImageRect inRect:(CGRect)inRect;
+
+/** 将文字转成图片
+ * @param string 字符串
+ * @param attributes 属性
+ * @param inRect 范围
+ *
+ * @return 文字图片
+ */
++ (UIImage *)imageWithString:(NSString *)string attributes:(NSDictionary *)attributes inRect:(CGRect)inRect;
+
+/** 获取视图控制器
+ *
+ * @return 视图控制器
+ */
++ (UIViewController *)viewController;
+
+/** 从视图中获取其控制器
+ * @param view 视图
+ *
+ * @return 视图控制器
+ */
++ (UIViewController *)viewControllerWithView:(UIView *)view;
 
 /** 获取授权信息 
  * @return : 授权信息词典

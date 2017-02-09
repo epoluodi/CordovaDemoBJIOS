@@ -7,14 +7,15 @@
 //
 
 /*
- * 更新于：2016-07-06
+ * 更新于：2016-12-20
  */
 
 #import <UIKit/UIKit.h>
-#import "KGCategoryAdditions.h"
+
 #import "KGTypeDefines.h"
 
 @class iAppRevision;
+@class KGBrushCanvas, KGBrushColor;
 
 /** 保存签名的闭包 */
 typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect);
@@ -44,7 +45,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 /** 水印图片
  * @param originImage : 原图
  * @param content : 水印内容，不可为空
- * @param color: 颜色，默认黑色
+ * @param color 颜色，默认黑色
  * @param position : 水印位置，默认右下角
  * @param scaleFactor : 缩放因子，(0, 1]，默认0.5
  * @return : 水印图片
@@ -54,7 +55,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 /** 水印图片
  * @param originImage : 原图
  * @param content : 水印内容，不可为空
- * @param textAttributes: 水印文字属性
+ * @param textAttributes 水印文字属性
  * @param position : 水印位置，默认右下角
  * @param gapPoint : 水印偏移量
  * @return : 水印图片
@@ -69,7 +70,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 
 /** 设置水印内容
  * @param content : 水印内容，不可为空
- * @param color: 颜色，默认黑色
+ * @param color 颜色，默认黑色
  * @param position : 水印位置，默认右下角
  * @param scaleFactor : 缩放因子，(0, 1]，默认0.5
  */
@@ -113,7 +114,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 
 /** 设置水印内容
  * @param content : 水印内容，不可为空
- * @param color: 颜色，默认黑色
+ * @param color 颜色，默认黑色
  * @param position : 水印位置，默认右下角
  * @param scaleFactor : 缩放因子，(0, 1]，默认0.5
  */
@@ -141,7 +142,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 
 /** 设置水印内容
  * @param content : 水印内容，不可为空
- * @param color: 颜色，默认黑色
+ * @param color 颜色，默认黑色
  * @param position : 水印位置，默认右下角
  * @param scaleFactor : 缩放因子，(0, 1]，默认0.5
  */
@@ -173,7 +174,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 
 /** 设置水印内容
  * @param content : 水印内容，不可为空
- * @param color: 颜色，默认黑色
+ * @param color 颜色，默认黑色
  * @param position : 水印位置，默认右下角
  * @param scaleFactor : 缩放因子，(0, 1]，默认0.5
  */
@@ -183,4 +184,5 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
  * @param completion : 完成回调
  */
 - (void)saveSealSignatureWithCompletion:(iAppRevisionViewSaveSignatureBlock)completion;
+
 @end

@@ -7,13 +7,10 @@
 //
 
 /*
- * 更新于 2016-06-28
+ * 更新于 2017-01-13
  */
 #import <UIKit/UIKit.h>
-#import "KGCategoryAdditions.h"
 #import "KGTypeDefines.h"
-
-@class KGAlertView;
 
 /** 笔刷设置信息改动回调闭包 */
 typedef void(^KGBrushSettingViewBrushValueDidChangeBlock)(NSDictionary *brushValueInfo);
@@ -36,7 +33,7 @@ typedef void(^KGBrushSettingViewBrushValueDidChangeBlock)(NSDictionary *brushVal
 - (instancetype)initWithLocalizedKey:(NSString *)localizedKey;
 
 /** 初始化
- * @param burshType : 笔刷类型
+ * @param brushType : 笔刷类型
  * @param brushWidth : 笔刷宽度，返回为(0~1]
  * @param brushColor : 笔刷颜色
  * @return : 实例对象
@@ -50,6 +47,9 @@ typedef void(^KGBrushSettingViewBrushValueDidChangeBlock)(NSDictionary *brushVal
 
 /** 展示笔刷设置视图 */
 - (void)show;
+
+/** 在指定的视图中展示笔刷设置视图 */
+- (void)showInView:(UIView *)view;
 
 /* 点击关闭按钮
  * @param completion : 完成回调

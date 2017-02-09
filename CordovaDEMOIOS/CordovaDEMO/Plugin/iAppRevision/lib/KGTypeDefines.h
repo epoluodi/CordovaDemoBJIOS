@@ -6,7 +6,14 @@
 //  Copyright © 2016年 com.kinggrid. All rights reserved.
 //
 
-/*
+/** KGPublics包版本更新信息
+ *
+ * 版本：V3.1.1.0
+ * 更新：2017-01-16
+ */
+
+/** 文件更新信息
+ *
  * 更新于：2016-09-14
  */
 

@@ -19,23 +19,47 @@
     blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     effectview = [[UIVisualEffectView alloc] initWithEffect:blur];
     _viewcontroller = viewcontroller;
-
+    
     self.frame=_viewcontroller.view.frame;
-    [self initView];
+    
     return self;
 }
 
 
--(void)initView
+-(void)initHandView
 {
-
-   [self addSubview:effectview];
     
-
+    [self addSubview:effectview];
+    
+    
+    
     handwritingView = [[KGHandwritingView alloc] init];
     handwritingView.backgroundColor=[UIColor whiteColor];
     handwritingView.handwritingWidth =1;
     [effectview addSubview:handwritingView];
+    
+    btnUndo = [[UIButton alloc] init];
+    [btnUndo setTitle:@"撤销" forState:UIControlStateNormal];
+    [btnUndo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnUndo setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    btnUndo.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnUndo.layer.borderWidth = 1;
+    btnUndo.layer.cornerRadius=8;
+    btnUndo.layer.masksToBounds=YES;
+    
+    btnRedo = [[UIButton alloc] init];
+    [btnRedo setTitle:@"恢复" forState:UIControlStateNormal];
+    [btnRedo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnRedo setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    btnRedo.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnRedo.layer.borderWidth = 1;
+    btnRedo.layer.cornerRadius=8;
+    btnRedo.layer.masksToBounds=YES;
+    
+    [effectview addSubview:btnRedo];
+    [effectview addSubview:btnUndo];
+    
+    
     //按钮初始化
     
     btnSave = [[UIButton alloc] init];
@@ -56,23 +80,6 @@
     btnCancel.layer.cornerRadius=8;
     btnCancel.layer.masksToBounds=YES;
     
-    btnUndo = [[UIButton alloc] init];
-    [btnUndo setTitle:@"撤销" forState:UIControlStateNormal];
-    [btnUndo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnUndo setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    btnUndo.layer.borderColor = [[UIColor whiteColor] CGColor];
-    btnUndo.layer.borderWidth = 1;
-    btnUndo.layer.cornerRadius=8;
-    btnUndo.layer.masksToBounds=YES;
-    
-    btnRedo = [[UIButton alloc] init];
-    [btnRedo setTitle:@"恢复" forState:UIControlStateNormal];
-    [btnRedo setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnRedo setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    btnRedo.layer.borderColor = [[UIColor whiteColor] CGColor];
-    btnRedo.layer.borderWidth = 1;
-    btnRedo.layer.cornerRadius=8;
-    btnRedo.layer.masksToBounds=YES;
     
     btnClean = [[UIButton alloc] init];
     [btnClean setTitle:@"清除" forState:UIControlStateNormal];
@@ -87,13 +94,65 @@
     [effectview addSubview:btnSave];
     [effectview addSubview:btnClean];
     [effectview addSubview:btnCancel];
-    [effectview addSubview:btnRedo];
-    [effectview addSubview:btnUndo];
+    
     
     
     [btnCancel addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     [btnUndo addTarget:self action:@selector(undo) forControlEvents:UIControlEventTouchUpInside];
     [btnRedo addTarget:self action:@selector(redo) forControlEvents:UIControlEventTouchUpInside];
+    [btnClean addTarget:self action:@selector(clean) forControlEvents:UIControlEventTouchUpInside];
+    [btnSave addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+}
+
+
+-(void)initTextView
+{
+    
+    [self addSubview:effectview];
+    textsignView = [[KGTextView alloc] init];
+    textsignView.backgroundColor=[UIColor whiteColor];
+    textsignView.textColor = [UIColor blackColor];
+    [effectview addSubview:textsignView];
+    
+    
+    //按钮初始化
+    
+    btnSave = [[UIButton alloc] init];
+    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+    [btnSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    [btnSave setTitleColor:[[UIColor greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    btnSave.layer.borderColor = [[UIColor greenColor] CGColor];
+    btnSave.layer.borderWidth = 1;
+    btnSave.layer.cornerRadius=8;
+    btnSave.layer.masksToBounds=YES;
+    
+    btnCancel = [[UIButton alloc] init];
+    [btnCancel setTitle:@"返回" forState:UIControlStateNormal];
+    [btnCancel setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnCancel setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    btnCancel.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnCancel.layer.borderWidth = 1;
+    btnCancel.layer.cornerRadius=8;
+    btnCancel.layer.masksToBounds=YES;
+    
+    
+    btnClean = [[UIButton alloc] init];
+    [btnClean setTitle:@"清除" forState:UIControlStateNormal];
+    [btnClean setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnClean setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    btnClean.layer.borderColor = [[UIColor whiteColor] CGColor];
+    btnClean.layer.borderWidth = 1;
+    btnClean.layer.cornerRadius=8;
+    btnClean.layer.masksToBounds=YES;
+    
+    
+    [effectview addSubview:btnSave];
+    [effectview addSubview:btnClean];
+    [effectview addSubview:btnCancel];
+    
+    
+    
+    [btnCancel addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     [btnClean addTarget:self action:@selector(clean) forControlEvents:UIControlEventTouchUpInside];
     [btnSave addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -120,14 +179,14 @@
         
         NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         NSString *cachePath = [cacPath objectAtIndex:0];
-
+        
         NSString *uuid = [[NSUUID UUID] UUIDString];
         NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
         fileuuid =uuid;
         NSLog(@"保存地址 %@",filepath);
         NSData *imgdata = UIImagePNGRepresentation(signatureImage);
         [imgdata writeToFile:filepath atomically:YES];
-//        [_viewcontroller signFinish:uuid callbackID:_callbackID];
+        //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
         [self uploadData:imgdata signatureRect:signatureRect];
         [self close];
     }];
@@ -175,7 +234,7 @@
         NSString *err = error.description;
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
         NSData *_errdata = [err dataUsingEncoding:encoding];
-           [_viewcontroller uploadError:[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding] callbackID:_callbackID];
+        [_viewcontroller uploadError:[[NSString alloc] initWithData:_errdata encoding:NSUTF8StringEncoding] callbackID:_callbackID];
     }];
     
 }
@@ -193,7 +252,7 @@
     } failure:^(NSError *error) {
         [_viewcontroller uploadError:error.description callbackID:_callbackID];
     }];
-
+    
 }
 
 
@@ -221,40 +280,57 @@
 -(void)show:(NSString *)callbackid
 {
     _callbackID = callbackid;
-[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated: NO];
-    self.transform = CGAffineTransformMakeRotation(M_PI/2);
-    CGRect frame = [UIScreen mainScreen].bounds;
-    NSLog(@"%@",NSStringFromCGRect(frame));
-    self.bounds = CGRectMake(0, 20, frame.size.width, frame.size.height);
-    [_viewcontroller.view addSubview:self];
+    if ([[serverData objectForKey:@"mode"] isEqual:@(1)])
+    {
+        [self initHandView];
+        [[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationLandscapeRight animated: NO];
+        self.transform = CGAffineTransformMakeRotation(M_PI/2);
+        CGRect frame = [UIScreen mainScreen].bounds;
+        NSLog(@"%@",NSStringFromCGRect(frame));
+        self.bounds = CGRectMake(0, 20, frame.size.width, frame.size.height);
+        [_viewcontroller.view addSubview:self];
+        effectview.frame = self.bounds;
+        handwritingView.frame = CGRectMake(20, 30, self.bounds.size.width-140, self.bounds.size.height-50);
+        handwritingView.layer.shadowColor =[[UIColor blackColor] CGColor];
+        handwritingView.layer.shadowRadius=6;
+        handwritingView.layer.shadowOpacity= 0.8;
+        handwritingView.layer.shadowOffset=CGSizeMake(6, 6);
+        
+        btnUndo.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, 30, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
+        btnRedo.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, 30 + btnUndo.frame.size.height + 10, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
+        btnClean.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, btnRedo.frame.origin.y + btnRedo.frame.size.height + 10, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
+        btnCancel.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, btnClean.frame.origin.y + btnClean.frame.size.height + 10, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
+        
+        
+        btnSave.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, self.bounds.size.height - 70, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
     
-  
-    effectview.frame = self.bounds;
-    handwritingView.frame = CGRectMake(20, 30, self.bounds.size.width-140, self.bounds.size.height-50);
-  
-    
-    handwritingView.layer.shadowColor =[[UIColor blackColor] CGColor];
-    handwritingView.layer.shadowRadius=6;
-    handwritingView.layer.shadowOpacity= 0.8;
-    handwritingView.layer.shadowOffset=CGSizeMake(6, 6);
-    
-    
-    
-    btnUndo.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, 30, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
-    btnRedo.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, 30 + btnUndo.frame.size.height + 10, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
-    btnClean.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, btnRedo.frame.origin.y + btnRedo.frame.size.height + 10, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
-    btnCancel.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, btnClean.frame.origin.y + btnClean.frame.size.height + 10, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
-    
-    
-    btnSave.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, self.bounds.size.height - 70, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
+        
+        
+    }
+
+    else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
+    {
+        [self initTextView];
+        [_viewcontroller.view addSubview:self];
+        effectview.frame = self.bounds;
+        
+        textsignView.frame = CGRectMake(20, 30, self.bounds.size.width-40, self.bounds.size.height/2);
+        textsignView.layer.shadowColor =[[UIColor blackColor] CGColor];
+        textsignView.layer.shadowRadius=6;
+        textsignView.layer.shadowOpacity= 0.8;
+        textsignView.layer.shadowOffset=CGSizeMake(6, 6);
+        
+    }
+
+   
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

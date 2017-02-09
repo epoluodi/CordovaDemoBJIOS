@@ -23,7 +23,7 @@
 {
     //手写板
     KGHandwritingView *handwritingView;
-    
+    KGTextView *textsignView;
     //模糊效果
     UIVisualEffectView *effectview;
     UIBlurEffect *blur;

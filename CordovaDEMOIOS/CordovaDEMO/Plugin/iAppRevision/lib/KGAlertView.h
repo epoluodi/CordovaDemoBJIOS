@@ -7,7 +7,7 @@
 //
 
 /*
- * 更新于：2016-07-07
+ * 更新于：2016-11-25
  */
 #import <UIKit/UIKit.h>
 
@@ -42,6 +42,9 @@ typedef NS_ENUM(NSInteger, KGAlertViewTransitionStyle) {
 
 /** 展示 */
 - (void)show;
+
+/** 移除所有弹出框 */
++ (void)dismissAllAlert;
 
 /** 移除 */
 - (void)dismiss;
@@ -78,7 +81,7 @@ typedef NS_ENUM(NSInteger, KGAlertViewTransitionStyle) {
 - (NSString *)buttonTitleWithIndex:(NSInteger)buttonIndex;
 
 /** 点击按钮的操作
- * @param clickedButton : 点击按钮的回到操作
+ * @param clickedButtonBlock : 点击按钮的回到操作
  */
 - (void)dismissWithClickedButtonAtIndex:(KGAlertViewClickButtonBlock)clickedButtonBlock;
 
