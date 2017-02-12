@@ -170,26 +170,43 @@
 
 -(void)clean
 {
-    [handwritingView clean];
+    if ([[serverData objectForKey:@"mode"] isEqual:@(1)])
+        [handwritingView clean];
+    else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
+             [textsignView clean];
 }
 
 -(void)save
 {
-    [handwritingView saveHandwritingSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
-        
-        NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        NSString *cachePath = [cacPath objectAtIndex:0];
-        
-        NSString *uuid = [[NSUUID UUID] UUIDString];
-        NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
-        fileuuid =uuid;
-        NSLog(@"保存地址 %@",filepath);
-        NSData *imgdata = UIImagePNGRepresentation(signatureImage);
-        [imgdata writeToFile:filepath atomically:YES];
-        //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
-        [self uploadData:imgdata signatureRect:signatureRect];
-        [self close];
-    }];
+    if ([[serverData objectForKey:@"mode"] isEqual:@(1)]){
+        [handwritingView saveHandwritingSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
+            
+            //        NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            //        NSString *cachePath = [cacPath objectAtIndex:0];
+            //
+            //        NSString *uuid = [[NSUUID UUID] UUIDString];
+            //        NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
+            //        fileuuid =uuid;
+            //        NSLog(@"保存地址 %@",filepath);
+            NSData *imgdata = UIImagePNGRepresentation(signatureImage);
+            //        [imgdata writeToFile:filepath atomically:YES];
+            //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
+            [self uploadData:imgdata signatureRect:signatureRect];
+            [self close];
+        }];
+    
+    }
+    else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
+    {
+        [textsignView saveTextSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
+            NSData *imgdata = UIImagePNGRepresentation(signatureImage);
+
+            [self uploadData:imgdata signatureRect:signatureRect];
+            [self close];
+        }];
+       
+    }
+    
 }
 
 
@@ -263,6 +280,7 @@
 -(void)close{
     [[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated: NO];
     [handwritingView removeFromSuperview];
+    [textsignView removeFromSuperview];
     [btnCancel removeFromSuperview];
     [btnClean removeFromSuperview];
     [btnSave removeFromSuperview];
@@ -303,27 +321,38 @@
         
         
         btnSave.frame = CGRectMake(handwritingView.frame.origin.x +  handwritingView.frame.size.width +20, self.bounds.size.height - 70, self.bounds.size.width - (20+16+16+handwritingView.frame.size.width), 50);
-    
+        
         
         
     }
-
+    
     else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
     {
         [self initTextView];
         [_viewcontroller.view addSubview:self];
         effectview.frame = self.bounds;
         
-        textsignView.frame = CGRectMake(20, 30, self.bounds.size.width-40, self.bounds.size.height/2);
+        textsignView.frame = CGRectMake(20, 30, self.bounds.size.width-40, self.bounds.size.height/2-100);
         textsignView.layer.shadowColor =[[UIColor blackColor] CGColor];
         textsignView.layer.shadowRadius=6;
         textsignView.layer.shadowOpacity= 0.8;
         textsignView.layer.shadowOffset=CGSizeMake(6, 6);
         
-    }
+        
+        btnClean.frame = CGRectMake(20, textsignView.frame.origin.y + textsignView.frame.size.height + 10, self.bounds.size.width - 40, 50);
+        btnCancel.frame = CGRectMake(20, btnClean.frame.origin.y + btnClean.frame.size.height + 10, self.bounds.size.width -40, 50);
+        btnSave.frame = CGRectMake(20, btnCancel.frame.origin.y + btnCancel.frame.size.height + 10, self.bounds.size.width -40, 50);
+        
 
-   
+        
+        
+        
+    }
+    
+    
 }
+
+
 
 /*
  // Only override drawRect: if you perform custom drawing.

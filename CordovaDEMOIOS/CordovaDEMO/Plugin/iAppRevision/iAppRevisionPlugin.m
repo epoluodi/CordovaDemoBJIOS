@@ -56,28 +56,33 @@
             }
             NSMutableArray *files=[[NSMutableArray alloc] init];
             
-            for (int i=1; i<fieldValues.count; i++) {
-                NSDictionary *_d =fieldValues[i];
-                //读取图片文件
-                NSString *imgbase64 = [_d objectForKey: [arg objectForKey:@"userName"]];
-                NSData *imgdata =[[iAppRevisionService service] imageDataWithBase64String:imgbase64];
-                
-                NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-                NSString *cachePath = [cacPath objectAtIndex:0];
-                
-                NSString *uuid = [[NSUUID UUID] UUIDString];
-                NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
-              
-                NSLog(@"保存地址 %@",filepath);
-                [imgdata writeToFile:filepath atomically:YES];
-                
-                [files addObject:filepath];
-                
-            }
+            NSDictionary *_d =fieldValues[0];
+            NSString *imgbase64 = [_d objectForKey:@"AllImage"];
+            NSData *imgdata =[[iAppRevisionService service] imageDataWithBase64String:imgbase64];
+            UIImage *img = [UIImage imageWithData:imgdata];
+            [self loadImageFinished:img];
+//            for (int i=1; i<fieldValues.count; i++) {
+//                NSDictionary *_d =fieldValues[i];
+//                //读取图片文件
+//                NSString *imgbase64 = [_d objectForKey: [arg objectForKey:@"userName"]];
+//                NSData *imgdata =[[iAppRevisionService service] imageDataWithBase64String:imgbase64];
+//                
+//                NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+//                NSString *cachePath = [cacPath objectAtIndex:0];
+//                
+//                NSString *uuid = [[NSUUID UUID] UUIDString];
+//                NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
+//              
+//                NSLog(@"保存地址 %@",filepath);
+//                [imgdata writeToFile:filepath atomically:YES];
+//                
+//                [files addObject:filepath];
+//                
+//            }
             
             
            //回调
-            result = @{@"state":@"0",@"desc":@"",@"data":files};
+            result = @{@"state":@"0",@"desc":@""};
             pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];//成功
             [ weakself.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             
@@ -94,6 +99,15 @@
 
     }];
 }
+- (void)loadImageFinished:(UIImage *)image
+{
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
+}
 
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    
+    NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);
+}
 
 @end
