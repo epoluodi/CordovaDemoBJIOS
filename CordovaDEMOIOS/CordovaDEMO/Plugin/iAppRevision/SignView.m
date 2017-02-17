@@ -113,7 +113,7 @@
     textsignView.backgroundColor=[UIColor whiteColor];
     textsignView.textColor = [UIColor blackColor];
     [effectview addSubview:textsignView];
-    
+    textsignView.textFont = [UIFont systemFontOfSize:14];
     
     //按钮初始化
     
@@ -188,10 +188,13 @@
             //        NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
             //        fileuuid =uuid;
             //        NSLog(@"保存地址 %@",filepath);
-            NSData *imgdata = UIImagePNGRepresentation(signatureImage);
+//            NSData *imgdata = UIImagePNGRepresentation(signatureImage);
+            UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:150];
+            NSData *imgdata = UIImagePNGRepresentation(newimg);
+            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
             //        [imgdata writeToFile:filepath atomically:YES];
             //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
-            [self uploadData:imgdata signatureRect:signatureRect];
+            [self uploadData:imgdata signatureRect:newrect];
             [self close];
         }];
     
@@ -199,9 +202,19 @@
     else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
     {
         [textsignView saveTextSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
-            NSData *imgdata = UIImagePNGRepresentation(signatureImage);
-
-            [self uploadData:imgdata signatureRect:signatureRect];
+            UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:150];
+            NSDateFormatter *df= [[NSDateFormatter alloc] init];
+            df.dateFormat = @"yyyy年MM月dd";
+            NSString *dt = [df stringFromDate:[NSDate date]];
+            NSString *watermarkStr = [NSString stringWithFormat:@"%@ %@",[serverData objectForKey:@"userName"] ,dt];
+            NSDictionary *textAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:9], NSForegroundColorAttributeName : [UIColor blackColor]};
+            UIImage *newsignatureImage = [iAppRevisionView watermarkImage:newimg content:watermarkStr textAttributes:textAttributes position:KGWatermarkPositionBottom gapPoint:CGPointMake(5, 5)];
+            
+            
+            NSData *imgdata = UIImagePNGRepresentation(newsignatureImage);
+            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
+            
+            [self uploadData:imgdata signatureRect:newrect];
             [self close];
         }];
        
@@ -264,7 +277,8 @@
     NSDateFormatter *df= [[NSDateFormatter alloc] init];
     df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dt = [df stringFromDate:[NSDate date]];
-    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt extractImage:YES  success:^(NSString *message) {
+    
+    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt allImage:YES success:^(NSString *message) {
         [_viewcontroller signFinish:fileuuid callbackID:_callbackID];
     } failure:^(NSError *error) {
         [_viewcontroller uploadError:error.description callbackID:_callbackID];
@@ -343,16 +357,70 @@
         btnCancel.frame = CGRectMake(20, btnClean.frame.origin.y + btnClean.frame.size.height + 10, self.bounds.size.width -40, 50);
         btnSave.frame = CGRectMake(20, btnCancel.frame.origin.y + btnCancel.frame.size.height + 10, self.bounds.size.width -40, 50);
         
-
-        
-        
-        
     }
     
     
 }
 
-
+//指定宽度按比例缩放
+-(UIImage *) imageCompressForWidthScale:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth{
+    
+    UIImage *newImage = nil;
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = defineWidth;
+    CGFloat targetHeight = height / (width / targetWidth);
+    CGSize size = CGSizeMake(targetWidth, targetHeight);
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
+    
+    if(CGSizeEqualToSize(imageSize, size) == NO){
+        
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        
+        if(widthFactor > heightFactor){
+            scaleFactor = widthFactor;
+        }
+        else{
+            scaleFactor = heightFactor;
+        }
+        scaledWidth = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        
+        if(widthFactor > heightFactor){
+            
+            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+            
+        }else if(widthFactor < heightFactor){
+            
+            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+        }
+    }
+    
+    UIGraphicsBeginImageContext(size);
+    
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    
+    [[UIColor colorWithRed:1 green:1 blue:1 alpha:1.0] set];
+    UIRectFill(CGRectMake(0, 0, thumbnailRect.size.width,thumbnailRect.size.height));
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    if(newImage == nil){
+        
+        NSLog(@"scale image fail");
+    }
+    UIGraphicsEndImageContext();  
+    return newImage;
+}
 
 /*
  // Only override drawRect: if you perform custom drawing.

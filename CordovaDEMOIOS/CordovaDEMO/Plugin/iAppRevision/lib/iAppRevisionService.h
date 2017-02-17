@@ -7,7 +7,7 @@
 //
 
 /*
- * 更新于：2017-02-09
+ * 更新于：2017-02-17
  */
 
 #import <Foundation/Foundation.h>
@@ -234,6 +234,27 @@ typedef NS_ENUM(NSInteger, iAppRevisionServiceType) {
                          fieldValue:(NSString *)fieldValue
                            dateTime:(NSString *)dateTime
                        extractImage:(BOOL)extractImage
+                            success:(void (^)(NSString *message))success
+                            failure:(void (^)(NSError *error))failure;
+
+/** 保存单个签名
+ * @param webService   服务器地址
+ * @param recordID     文档记录号
+ * @param fieldName    签名区域名称
+ * @param userName     用户名
+ * @param fieldValue   签名值
+ * @param dateTime     日期时间（格式：yyyy-MM-dd HH:mm:ss）
+ * @param allImage     追加所有签批图片
+ * @param success      成功回调
+ * @param failure      失败回调
+ */
+- (void)saveSignatureWithWebService:(NSString *)webService
+                           recordID:(NSString *)recordID
+                           userName:(NSString *)userName
+                          fieldName:(NSString *)fieldName
+                         fieldValue:(NSString *)fieldValue
+                           dateTime:(NSString *)dateTime
+                           allImage:(BOOL)allImage
                             success:(void (^)(NSString *message))success
                             failure:(void (^)(NSError *error))failure;
 
