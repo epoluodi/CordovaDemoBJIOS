@@ -24,6 +24,7 @@
 		5C3A77121DF45C4E0034A3E4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */; };
 		5C3A77141DF45C750034A3E4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */; };
 		5C3A77161DF45C7C0034A3E4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */; };
+		5C3F06641E59CE8D00CFB12B /* AppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F06631E59CE8D00CFB12B /* AppVersion.m */; };
 		5C5BAFB31E0D4EC900DB21EA /* KGBrushes.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5C5BAFAD1E0D4EC900DB21EA /* KGBrushes.bundle */; };
 		5C5BAFB41E0D4EC900DB21EA /* libiAppRevision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C5BAFB21E0D4EC900DB21EA /* libiAppRevision.a */; };
 		5C5BAFB71E0D4F7E00DB21EA /* iAppRevisionPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C5BAFB61E0D4F7E00DB21EA /* iAppRevisionPlugin.m */; };
@@ -104,6 +105,8 @@
 		5C3A77111DF45C4E0034A3E4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5C3A77131DF45C750034A3E4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5C3A77151DF45C7C0034A3E4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5C3F06621E59CE8D00CFB12B /* AppVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppVersion.h; sourceTree = "<group>"; };
+		5C3F06631E59CE8D00CFB12B /* AppVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppVersion.m; sourceTree = "<group>"; };
 		5C5BAFA81E0D4EC900DB21EA /* iAppRevision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevision.h; sourceTree = "<group>"; };
 		5C5BAFA91E0D4EC900DB21EA /* iAppRevisionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevisionService.h; sourceTree = "<group>"; };
 		5C5BAFAA1E0D4EC900DB21EA /* iAppRevisionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iAppRevisionView.h; sourceTree = "<group>"; };
@@ -266,6 +269,7 @@
 		5C3A77061DF457000034A3E4 /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
+				5C3F065F1E59CE8D00CFB12B /* cordova-plugin-app-version */,
 				5C5BAFA61E0D4EC900DB21EA /* iAppRevision */,
 				5C2C36A11DF5AD7E000F0C2E /* WebViewRequest.h */,
 				5C2C36A21DF5AD7E000F0C2E /* WebViewRequest.m */,
@@ -288,6 +292,31 @@
 				5C3A770B1DF45C270034A3E4 /* AssetsLibrary.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5C3F065F1E59CE8D00CFB12B /* cordova-plugin-app-version */ = {
+			isa = PBXGroup;
+			children = (
+				5C3F06601E59CE8D00CFB12B /* src */,
+			);
+			path = "cordova-plugin-app-version";
+			sourceTree = "<group>";
+		};
+		5C3F06601E59CE8D00CFB12B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5C3F06611E59CE8D00CFB12B /* ios */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		5C3F06611E59CE8D00CFB12B /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				5C3F06621E59CE8D00CFB12B /* AppVersion.h */,
+				5C3F06631E59CE8D00CFB12B /* AppVersion.m */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 		5C5BAFA61E0D4EC900DB21EA /* iAppRevision */ = {
@@ -460,6 +489,7 @@
 			files = (
 				5C03C3771DF06B030059A3FB /* ViewController.m in Sources */,
 				5C03C3741DF06B030059A3FB /* AppDelegate.m in Sources */,
+				5C3F06641E59CE8D00CFB12B /* AppVersion.m in Sources */,
 				5C03C3711DF06B030059A3FB /* main.m in Sources */,
 				5C2C36A31DF5AD7E000F0C2E /* WebViewRequest.m in Sources */,
 				5C3A77091DF45B1A0034A3E4 /* CordovaViewController.m in Sources */,

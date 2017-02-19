@@ -33,6 +33,12 @@
             <feature name="iAppRevisionPlugin">
                 <param name="ios-package" value="iAppRevisionPlugin" />
             </feature>
+            <!--40插件-->
+            <feature name="AppVersion">
+                <param name="ios-package" value="AppVersion" />
+            </feature>
+            
+            
         </config-file>
 
     </platform>

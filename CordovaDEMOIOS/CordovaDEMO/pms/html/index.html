@@ -33,6 +33,7 @@
 		<a class="long_button" onclick="click2()">Post</a>
         <a class="long_button" onclick="click3()">签名</a>
         <a class="long_button" onclick="click4()">读取签批数据</a>
+        <a class="long_button" onclick="click5()">获取版本信息</a>
 		<script src="../cordova.js" type="text/javascript"></script>
 		<script src="../js/jquery-2.1.1.js" type="text/javascript"></script>
 		<script>
@@ -85,7 +86,7 @@
                               "fieldName":"SendOut1487315098837",//签名区域名称
                               "userName":"yang1",
                               "haveFieldValue":"1",  //是否检查原始签批数据 1 检查 0 不检查
-                              "mode":2
+                              "mode":1
 
 
                 },
@@ -122,6 +123,19 @@
         {
             alert(JSON.stringify(json));
         }
+        
+        function SuccessCallback(json)
+        {
+            alert(json);
+        }
+        
+        
+        //40 插件
+        function click5()
+        {
+            getAppVersion.getPackageName(SuccessCallback,null);
+        }
+        
 		</script>
 
 </html>

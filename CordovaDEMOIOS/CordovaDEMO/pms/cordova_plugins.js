@@ -21,13 +21,19 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
                                             "cdv.sign"
                                             ]
                                  },
+                                 
+                                 //40 插件
+                                 {
+                                 "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+                                 "id": "AppVersionPlugin",
+                 
+                                 },
+                                 
                                  ];
                module.exports.metadata = 
                // TOP OF METADATA
                {
-               "com.suypower.stereo.suehome.CordovaPlugin.http.FavoriteRequest": "0.0.1",
-               
-               
+ 
                }
                // BOTTOM OF METADATA
                });
