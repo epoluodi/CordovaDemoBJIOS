@@ -26,9 +26,19 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
                                  {
                                  "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
                                  "id": "AppVersionPlugin",
-                 
                                  },
-                                 
+                                 {
+                                 "file": "plugins/cordova-plugin-camera/www/Camera.js",
+                                 "id": "Camera",
+                                 },
+                                 {
+                                 "file": "plugins/cordova-plugin-device/www/device.js",
+                                 "id": "device",
+                                 },
+                                 {
+                                 "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+                                 "id": "statusBar",
+                                 },
                                  ];
                module.exports.metadata = 
                // TOP OF METADATA

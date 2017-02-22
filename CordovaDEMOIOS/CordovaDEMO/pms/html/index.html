@@ -34,6 +34,8 @@
         <a class="long_button" onclick="click3()">签名</a>
         <a class="long_button" onclick="click4()">读取签批数据</a>
         <a class="long_button" onclick="click5()">获取版本信息</a>
+        <a class="long_button" onclick="click6()">拍照</a>
+         <a class="long_button" onclick="click7()">设备信息</a>
 		<script src="../cordova.js" type="text/javascript"></script>
 		<script src="../js/jquery-2.1.1.js" type="text/javascript"></script>
 		<script>
@@ -136,6 +138,18 @@
             getAppVersion.getPackageName(SuccessCallback,null);
         }
         
+        function click6()
+        {
+ 
+            cameraExport.getPicture(SuccessCallback,null,{ "quality": 50 });
+        }
+        
+        
+        function click7()
+        {
+            Device.prototype.getInfo(SuccessCallback,null);
+       
+        }
 		</script>
 
 </html>
