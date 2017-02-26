@@ -166,7 +166,7 @@
     {
     
         word =[serverData objectForKey:@"word"];
-        
+        textsignView.text=word;
     }
     
 }
@@ -203,6 +203,7 @@
             UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:800];
             [self loadImageFinished:newimg];
             imgdata = UIImagePNGRepresentation(newimg);
+            word=@"";
 //            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
             [imgdata writeToFile:filepath atomically:YES];
             //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
@@ -237,7 +238,7 @@
                              @"fieldName":[serverData objectForKey:@"fieldName"] ,
                                   @"userName":[serverData objectForKey:@"userName"] ,
                                @"mode":[serverData objectForKey:@"mode"]  ,
-                               @"word":@"word",
+                               @"word":word,
                               @"base64":[self getImgBase64:imgdata] };
     NSData *jsondata = [NSJSONSerialization dataWithJSONObject:returndict options:NSJSONWritingPrettyPrinted error:nil];
     NSString *json = [[NSString alloc] initWithData:jsondata encoding:NSUTF8StringEncoding];
