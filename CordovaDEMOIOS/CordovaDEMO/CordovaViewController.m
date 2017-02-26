@@ -70,11 +70,21 @@
         arg = [command.arguments objectAtIndex:0];//获得参数信息
         dispatch_async(dispatch_get_main_queue(), ^{
             SignView *signview= [[SignView alloc] init:self];
-//            NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-            signview.serverData = arg;
+            NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+            signview.serverData = _jsondata;
             [signview show:[command.callbackId copy]];
         });
 
+    }else if ([Action isEqualToString:CDV_SENDSIGNVIEW])
+    {
+        arg = [command.arguments objectAtIndex:0];//获得参数信息
+        dispatch_async(dispatch_get_main_queue(), ^{
+            SignView *signview= [[SignView alloc] init:self];
+            NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[((NSString *)arg) dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+            signview.serverData = _jsondata;
+            [signview uploadData:[command.callbackId copy]];
+        });
+        
     }
 }
 
@@ -95,6 +105,13 @@
     CDVPluginResult* pluginResult = nil;
     
     pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errdesc];//成功
+    [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
+}
+
+-(void)CallBackPreView:(NSString *)json callbackID:(NSString *)callbackid
+{
+    CDVPluginResult* pluginResult = nil;
+    pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:json];//成功
     [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
 }
 #pragma mark -

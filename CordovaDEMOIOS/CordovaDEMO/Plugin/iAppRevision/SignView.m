@@ -9,6 +9,7 @@
 #import "SignView.h"
 #import "KGAlertView.h"
 #import "iAppRevisionService.h"
+#import "KGBase64.h"
 
 @implementation SignView
 @synthesize serverData;
@@ -63,7 +64,7 @@
     //按钮初始化
     
     btnSave = [[UIButton alloc] init];
-    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+    [btnSave setTitle:@"确定" forState:UIControlStateNormal];
     [btnSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [btnSave setTitleColor:[[UIColor greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     btnSave.layer.borderColor = [[UIColor greenColor] CGColor];
@@ -102,6 +103,11 @@
     [btnRedo addTarget:self action:@selector(redo) forControlEvents:UIControlEventTouchUpInside];
     [btnClean addTarget:self action:@selector(clean) forControlEvents:UIControlEventTouchUpInside];
     [btnSave addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    
+     if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"1"])//没有原始数据
+     {
+         
+     }
 }
 
 
@@ -118,7 +124,7 @@
     //按钮初始化
     
     btnSave = [[UIButton alloc] init];
-    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+    [btnSave setTitle:@"确定" forState:UIControlStateNormal];
     [btnSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [btnSave setTitleColor:[[UIColor greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     btnSave.layer.borderColor = [[UIColor greenColor] CGColor];
@@ -155,6 +161,14 @@
     [btnCancel addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     [btnClean addTarget:self action:@selector(clean) forControlEvents:UIControlEventTouchUpInside];
     [btnSave addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"1"])//没有原始数据
+    {
+    
+        word =[serverData objectForKey:@"word"];
+        
+    }
+    
 }
 
 
@@ -178,29 +192,27 @@
 
 -(void)save
 {
+    __block NSData *imgdata;
     if ([[serverData objectForKey:@"mode"] isEqual:@(1)]){
         [handwritingView saveHandwritingSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
             
-            //        NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-            //        NSString *cachePath = [cacPath objectAtIndex:0];
-            //
-            //        NSString *uuid = [[NSUUID UUID] UUIDString];
-            //        NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",uuid]];
-            //        fileuuid =uuid;
-            //        NSLog(@"保存地址 %@",filepath);
-//            NSData *imgdata = UIImagePNGRepresentation(signatureImage);
-            UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:150];
-            NSData *imgdata = UIImagePNGRepresentation(newimg);
-            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
-            //        [imgdata writeToFile:filepath atomically:YES];
+            NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            NSString *cachePath = [cacPath objectAtIndex:0];
+            NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[serverData objectForKey:@"recordID"]]];
+            NSLog(@"保存地址 %@",filepath);
+            UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:800];
+            [self loadImageFinished:newimg];
+            imgdata = UIImagePNGRepresentation(newimg);
+//            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
+            [imgdata writeToFile:filepath atomically:YES];
             //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
-            [self uploadData:imgdata signatureRect:newrect];
-            [self close];
+//            [self uploadData:imgdata signatureRect:newrect];
+     
         }];
-    
     }
     else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
     {
+        
         [textsignView saveTextSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
             UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:150];
             NSDateFormatter *df= [[NSDateFormatter alloc] init];
@@ -210,22 +222,54 @@
             NSDictionary *textAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:9], NSForegroundColorAttributeName : [UIColor blackColor]};
             UIImage *newsignatureImage = [iAppRevisionView watermarkImage:newimg content:watermarkStr textAttributes:textAttributes position:KGWatermarkPositionBottom gapPoint:CGPointMake(5, 5)];
             
-            
-            NSData *imgdata = UIImagePNGRepresentation(newsignatureImage);
-            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
-            
-            [self uploadData:imgdata signatureRect:newrect];
+            word = textsignView.text;
+            imgdata = UIImagePNGRepresentation(newsignatureImage);
+//            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
+//            
+//            [self uploadData:imgdata signatureRect:newrect];
             [self close];
         }];
        
     }
     
+    
+    NSDictionary *returndict = @{@"recordID":[serverData objectForKey:@"recordID"],
+                             @"fieldName":[serverData objectForKey:@"fieldName"] ,
+                                  @"userName":[serverData objectForKey:@"userName"] ,
+                               @"mode":[serverData objectForKey:@"mode"]  ,
+                               @"word":@"word",
+                              @"base64":[self getImgBase64:imgdata] };
+    NSData *jsondata = [NSJSONSerialization dataWithJSONObject:returndict options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *json = [[NSString alloc] initWithData:jsondata encoding:NSUTF8StringEncoding];
+    [_viewcontroller CallBackPreView:json callbackID:_callbackID];
+    [self close];
+    
 }
 
+-(NSString *)getImgBase64:(NSData *)data
+{
+    KGBase64 *b64 = [KGBase64 base64];
+    return [b64 base64StringWithData:data];
+}
 
--(void)uploadData:(NSData *)signdata signatureRect:(CGRect)signatureRect{
+-(void)uploadData :(NSString *)callbackid{
+    _callbackID = callbackid;
     iAppRevisionService *_server = [iAppRevisionService service];
     __weak __typeof(self) weakself= self;
+    
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[serverData objectForKey:@"recordID"]]];
+    NSLog(@"保存地址 %@",filepath);
+    NSData *signdata = [NSData dataWithContentsOfFile:filepath];
+    if (!signdata)
+    {
+        [_viewcontroller uploadError:@"1" callbackID:_callbackID];
+        return;
+    }
+    UIImage *image = [UIImage imageWithData:signdata];
+    CGRect signatureRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    
     if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"0"])//没有原始数据
     {
         //生成新的签批数据
@@ -242,7 +286,7 @@
     }
     
     
-    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] success:^(NSString *fieldValue) {
+    [_server loadSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"oldRecordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"oldFieldName"] success:^(NSString *fieldValue) {
         
         if (!fieldValue)
         {
@@ -278,11 +322,22 @@
     df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSString *dt = [df stringFromDate:[NSDate date]];
     
-    [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt allImage:YES success:^(NSString *message) {
-        [_viewcontroller signFinish:fileuuid callbackID:_callbackID];
-    } failure:^(NSError *error) {
-        [_viewcontroller uploadError:error.description callbackID:_callbackID];
-    }];
+    if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"0"])
+    {
+        [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt allImage:YES success:^(NSString *message) {
+            [_viewcontroller signFinish:@"0" callbackID:_callbackID];
+        } failure:^(NSError *error) {
+            [_viewcontroller uploadError:@"1" callbackID:_callbackID];
+        }];
+    }else  if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"1"])
+    {
+        [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"newRecordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt allImage:YES success:^(NSString *message) {
+            [_viewcontroller signFinish:@"0" callbackID:_callbackID];
+        } failure:^(NSError *error) {
+            [_viewcontroller uploadError:@"1" callbackID:_callbackID];
+        }];
+    }
+  
     
 }
 
@@ -421,6 +476,47 @@
     UIGraphicsEndImageContext();  
     return newImage;
 }
+
+//保存元数据
+-(void)writePointToText:(NSString *)data
+{
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",[serverData objectForKey:@"recordID"]]];
+    NSLog(@"元数据地址 %@",filepath);
+    
+    NSFileManager *filemanger = [NSFileManager defaultManager];
+    [filemanger removeItemAtPath:filepath error:nil];
+    [data writeToFile:filepath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+//读取元数据
+-(NSString *)readPointFromTxt
+{
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",[serverData objectForKey:@"recordID"]]];
+    NSLog(@"元数据地址 %@",filepath);
+    
+    NSData *data = [NSData dataWithContentsOfFile:filepath];
+    if (!data)
+        return nil;
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+- (void)loadImageFinished:(UIImage *)image
+{
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)self);
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    
+    NSLog(@"image = %@, error = %@, contextInfo = %@", image, error, contextInfo);
+}
+
+
+
 
 /*
  // Only override drawRect: if you perform custom drawing.

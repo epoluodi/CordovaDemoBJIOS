@@ -31,6 +31,14 @@
     }];
 }
 
+-(void)sendSign:(CDVInvokedUrlCommand *)command
+{
+    CDVViewController *cdv = (CDVViewController *)self.viewController;
+    [self.commandDelegate runInBackground:^{
+        [cdv OnMessage:CDV_SENDSIGNVIEW command:command];
+    }];
+}
+
 -(void)loadSign:(CDVInvokedUrlCommand *)command
 {
    __block CDVPluginResult* pluginResult = nil;

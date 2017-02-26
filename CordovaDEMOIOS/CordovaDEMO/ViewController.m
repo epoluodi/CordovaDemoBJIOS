@@ -48,8 +48,8 @@
     NSString *bundlepath = [[NSBundle mainBundle] pathForResource:@"pms" ofType:@""];
     NSString *homeurl = [NSString stringWithFormat:@"file://%@/%@", bundlepath ,@"html/index.html"];
     
-    cdv1.HomeUrl =homeurl;
-//   cdv1.HomeUrl =@"http://220.194.33.92/defaultroot/clientview/dealfile/indexIos.html";
+//    cdv1.HomeUrl =homeurl;
+   cdv1.HomeUrl =@"http://220.194.33.120/defaultroot/clientview/dealfile/indexIOS.html";
     [self presentViewController:cdv1 animated:YES completion:nil];
     
 }

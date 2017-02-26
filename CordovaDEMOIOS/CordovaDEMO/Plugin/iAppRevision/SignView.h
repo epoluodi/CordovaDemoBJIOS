@@ -18,6 +18,9 @@
 
 //失败回调
 -(void)uploadError:(NSString *)errdesc callbackID:(NSString *)callbackid;
+
+//回调显示签批图片
+-(void)CallBackPreView:(NSString *)json callbackID:(NSString *)callbackid;
 @end
 @interface SignView : UIView
 {
@@ -38,6 +41,8 @@
     
     NSString *_callbackID;
     NSString *fileuuid;//签名图片uuid
+    
+    NSString *word,*pointData;
 }
 
 @property (copy,nonatomic)NSDictionary *serverData;//初始化数据
@@ -46,4 +51,5 @@
 
 //显示签名 传入回调js 的id
 -(void)show:(NSString *)callbackid;
+-(void)uploadData :(NSString *)callbackid;
 @end

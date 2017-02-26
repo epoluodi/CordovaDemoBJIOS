@@ -7,7 +7,7 @@
 //
 
 /*
- * 更新于：2016-12-20
+ * 更新于：2017-02-26
  */
 
 #import <UIKit/UIKit.h>
@@ -41,6 +41,8 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 @property (copy, nonatomic) UIFont *textFont;
 /** 文本颜色 */
 @property (copy, nonatomic) UIColor *textColor;
+/** 文本 */
+@property (nonatomic, copy) NSString *text;
 
 /** 水印图片
  * @param originImage : 原图
@@ -139,6 +141,8 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 @property (copy, nonatomic) UIFont *textFont;
 /** 文字颜色 */
 @property (copy, nonatomic) UIColor *textColor;
+/** 文本 */
+@property (nonatomic, copy) NSString *text;
 
 /** 设置水印内容
  * @param content : 水印内容，不可为空

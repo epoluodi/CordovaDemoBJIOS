@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CordovaDEMO/Plugin/cordova-plugin-device/src/ios/CDVDevice.m"
-            timestampString = "509297416.570271"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "-getDeviceInfo:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "CordovaDEMO/Plugin/cordova-plugin-statusbar/src/ios/CDVStatusBar.m"
             timestampString = "509298086.341647"
             startingColumnNumber = "9223372036854775807"
