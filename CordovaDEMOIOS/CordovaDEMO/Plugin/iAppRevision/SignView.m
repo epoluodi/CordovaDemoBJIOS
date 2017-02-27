@@ -192,14 +192,15 @@
 
 -(void)save
 {
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[serverData objectForKey:@"recordID"]]];
+    NSLog(@"保存地址 %@",filepath);
     __block NSData *imgdata;
     if ([[serverData objectForKey:@"mode"] isEqual:@(1)]){
         [handwritingView saveHandwritingSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
             
-            NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-            NSString *cachePath = [cacPath objectAtIndex:0];
-            NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[serverData objectForKey:@"recordID"]]];
-            NSLog(@"保存地址 %@",filepath);
+    
             UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:800];
             [self loadImageFinished:newimg];
             imgdata = UIImagePNGRepresentation(newimg);
@@ -215,16 +216,18 @@
     {
         
         [textsignView saveTextSignatureWithCompletion:^(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect) {
-            UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:150];
+         
             NSDateFormatter *df= [[NSDateFormatter alloc] init];
             df.dateFormat = @"yyyy年MM月dd";
             NSString *dt = [df stringFromDate:[NSDate date]];
             NSString *watermarkStr = [NSString stringWithFormat:@"%@ %@",[serverData objectForKey:@"userName"] ,dt];
             NSDictionary *textAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:9], NSForegroundColorAttributeName : [UIColor blackColor]};
-            UIImage *newsignatureImage = [iAppRevisionView watermarkImage:newimg content:watermarkStr textAttributes:textAttributes position:KGWatermarkPositionBottom gapPoint:CGPointMake(5, 5)];
+            UIImage *newsignatureImage = [iAppRevisionView watermarkImage:signatureImage content:watermarkStr textAttributes:textAttributes position:KGWatermarkPositionBottom gapPoint:CGPointMake(5, 5)];
             
             word = textsignView.text;
-            imgdata = UIImagePNGRepresentation(newsignatureImage);
+            UIImage *newtextimg = [self imageCompressForWidthScale:newsignatureImage targetWidth:800];
+            imgdata = UIImagePNGRepresentation(newtextimg);
+            [imgdata writeToFile:filepath atomically:YES];
 //            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
 //            
 //            [self uploadData:imgdata signatureRect:newrect];
@@ -326,6 +329,7 @@
     if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"0"])
     {
         [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"recordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt allImage:YES success:^(NSString *message) {
+            NSLog(@"recordid %@",[serverData objectForKey:@"recordID"]);
             [_viewcontroller signFinish:@"0" callbackID:_callbackID];
         } failure:^(NSError *error) {
             [_viewcontroller uploadError:@"1" callbackID:_callbackID];
@@ -333,6 +337,7 @@
     }else  if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"1"])
     {
         [_server saveSignatureWithWebService:[serverData objectForKey:@"webService"] recordID:[serverData objectForKey:@"newRecordID"] userName:[serverData objectForKey:@"userName"] fieldName:[serverData objectForKey:@"fieldName"] fieldValue:fieldValue dateTime:dt allImage:YES success:^(NSString *message) {
+            NSLog(@"recordid %@",[serverData objectForKey:@"newRecordID"]);
             [_viewcontroller signFinish:@"0" callbackID:_callbackID];
         } failure:^(NSError *error) {
             [_viewcontroller uploadError:@"1" callbackID:_callbackID];
