@@ -7,7 +7,7 @@
 //
 
 /*
- * 更新于：2017-02-26
+ * 更新于：2017-03-01
  */
 
 #import <UIKit/UIKit.h>
@@ -21,6 +21,7 @@
 typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage, UIImage *signatureImage, CGRect signatureRect);
 
 #pragma mark - iAppRevisionView
+/* 2017-03-01 */
 @interface iAppRevisionView : UIView
 
 /** 签名类型 */
@@ -35,6 +36,8 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 @property (assign, nonatomic) CGFloat handwritingWidth;
 /** 手写签名的笔锋颜色 */
 @property (copy, nonatomic) UIColor *handwritingColor;
+/** 手写路径的集合 */
+@property (nonatomic, copy, readonly) NSArray *brushPaths;
 
 //文本签批类型的设置选项
 /** 文本字体 */
@@ -87,6 +90,11 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 /** 清屏操作 */
 - (void)clean;
 
+/** 渲染画板
+ * @param paths 路径集合
+ */
+- (void)renderViewWithPaths:(NSArray *)paths;
+
 /** 保存签名
  * @param completion : 完成回调
  */
@@ -94,6 +102,7 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 @end
 
 #pragma mark - Class - KGHandwritingView
+/* 2017-03-01 */
 @interface KGHandwritingView : UIView
 
 /** 是否开启水印 */
@@ -104,6 +113,8 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
 @property (assign, nonatomic) CGFloat handwritingWidth;
 /** 手写签名的笔锋颜色 */
 @property (copy, nonatomic) UIColor *handwritingColor;
+/** 手写路径的集合 */
+@property (nonatomic, copy, readonly) NSArray *brushPaths;
 
 /** 撤销操作 */
 - (void)undo;
@@ -121,6 +132,8 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
  * @param scaleFactor : 缩放因子，(0, 1]，默认0.5
  */
 - (void)setWatermarkWithContent:(NSString *)content color:(UIColor *)color position:(KGWatermarkPosition)position scaleFactor:(CGFloat)scaleFactor;
+
+- (void)renderViewWithPaths:(NSArray *)paths;
 
 /** 保存签名
  * @param completion : 完成回调

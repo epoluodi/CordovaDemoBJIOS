@@ -52,4 +52,5 @@
 //显示签名 传入回调js 的id
 -(void)show:(NSString *)callbackid;
 -(void)uploadData :(NSString *)callbackid;
+-(void)writePointDataToText:(NSData *)pointdata;
 @end

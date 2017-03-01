@@ -106,7 +106,10 @@
     
      if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"1"])//没有原始数据
      {
-         
+         NSData *pointdata = [self readPointDataFromFile];
+         NSArray *arr2 = [NSKeyedUnarchiver unarchiveObjectWithData:pointdata];
+         [handwritingView renderViewWithPaths:arr2];
+
      }
 }
 
@@ -205,10 +208,16 @@
             [self loadImageFinished:newimg];
             imgdata = UIImagePNGRepresentation(newimg);
             word=@"";
-//            CGRect newrect = CGRectMake(0, 0, newimg.size.width, newimg.size.height);
+            
+            
+            NSArray *pointdata= handwritingView.brushPaths;
+            //数组 转 data
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:pointdata];
+//            NSArray *arr2 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
+            [self writePointDataToText:data];
             [imgdata writeToFile:filepath atomically:YES];
-            //        [_viewcontroller signFinish:uuid callbackID:_callbackID];
-//            [self uploadData:imgdata signatureRect:newrect];
+
      
         }];
     }
@@ -246,6 +255,7 @@
     NSData *jsondata = [NSJSONSerialization dataWithJSONObject:returndict options:NSJSONWritingPrettyPrinted error:nil];
     NSString *json = [[NSString alloc] initWithData:jsondata encoding:NSUTF8StringEncoding];
     [_viewcontroller CallBackPreView:json callbackID:_callbackID];
+    
     [self close];
     
 }
@@ -496,6 +506,19 @@
     [data writeToFile:filepath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
+-(void)writePointDataToText:(NSData *)pointdata
+{
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",[serverData objectForKey:@"recordID"]]];
+    NSLog(@"元数据地址 %@",filepath);
+    
+    NSFileManager *filemanger = [NSFileManager defaultManager];
+    [filemanger removeItemAtPath:filepath error:nil];
+    [pointdata writeToFile:filepath atomically:YES];
+   
+}
+
 //读取元数据
 -(NSString *)readPointFromTxt
 {
@@ -509,6 +532,21 @@
         return nil;
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
+
+
+-(NSData *)readPointDataFromFile
+{
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",[serverData objectForKey:@"recordID"]]];
+    NSLog(@"元数据地址 %@",filepath);
+    
+    NSData *data = [NSData dataWithContentsOfFile:filepath];
+    if (!data)
+        return nil;
+    return data;
+}
+
 
 - (void)loadImageFinished:(UIImage *)image
 {
