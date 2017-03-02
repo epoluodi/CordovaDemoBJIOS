@@ -39,6 +39,28 @@
     }];
 }
 
+-(void)loadPointData:(CDVInvokedUrlCommand *)command
+{
+    NSString * strarg = [command.arguments objectAtIndex:0];//获得参数信息
+    NSDictionary *_jsondata = [NSJSONSerialization JSONObjectWithData:[strarg dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+    NSString *pointdata = [_jsondata objectForKey:@"pointData"];
+    NSString *recordid = [_jsondata objectForKey:@"recordID"];
+    
+    
+    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachePath = [cacPath objectAtIndex:0];
+    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",recordid]];
+    NSLog(@"元数据地址 %@",filepath);
+    
+    NSFileManager *filemanger = [NSFileManager defaultManager];
+    [filemanger removeItemAtPath:filepath error:nil];
+    [pointdata writeToFile:filepath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    
+    CDVPluginResult* pluginResult = nil;
+    pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:recordid];//成功
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 -(void)loadSign:(CDVInvokedUrlCommand *)command
 {
    __block CDVPluginResult* pluginResult = nil;

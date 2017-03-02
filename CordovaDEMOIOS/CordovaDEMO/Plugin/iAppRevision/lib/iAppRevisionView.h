@@ -7,7 +7,7 @@
 //
 
 /*
- * 更新于：2017-03-01
+ * 更新于：2017-03-02
  */
 
 #import <UIKit/UIKit.h>
@@ -66,6 +66,20 @@ typedef void(^iAppRevisionViewSaveSignatureBlock)(UIImage *iAppRevisionViewImage
  * @return : 水印图片
  */
 + (UIImage *)watermarkImage:(UIImage *)originImage content:(NSString *)content textAttributes:(NSDictionary *)textAttributes position:(KGWatermarkPosition)position gapPoint:(CGPoint)gapPoint;
+
+/** 将路径集合转成路径字符串
+ * @param brushPaths 路径集合
+ *
+ * @return 路径字符串
+ */
++ (NSString *)brushPathWithPaths:(NSArray *)brushPaths;
+
+/** 将路径字符串还原成路径集合
+ * @param brushPath 路径字符串
+ *
+ * @return 路径集合
+ */
++ (NSArray *)brushPathsFromPath:(NSString *)brushPath;
 
 /** 盖章
  * note 盖章签名类型的设置选项

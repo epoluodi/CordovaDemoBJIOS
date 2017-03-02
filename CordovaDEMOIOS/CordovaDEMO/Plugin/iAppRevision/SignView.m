@@ -106,9 +106,15 @@
     
      if ([[serverData objectForKey:@"haveFieldValue"]  isEqualToString:@"1"])//没有原始数据
      {
-         NSData *pointdata = [self readPointDataFromFile];
-         NSArray *arr2 = [NSKeyedUnarchiver unarchiveObjectWithData:pointdata];
-         [handwritingView renderViewWithPaths:arr2];
+          NSString*_strjson= [self readPointFromTxt];
+//         NSString*_strjson = [NSKeyedUnarchiver unarchiveObjectWithData:pointdata];
+         @try {
+             NSArray *arr = [iAppRevisionView brushPathsFromPath:_strjson];
+             [handwritingView renderViewWithPaths:arr];
+         } @catch (NSException *exception) {
+             
+         }
+      
 
      }
 }
@@ -205,20 +211,17 @@
             
     
             UIImage *newimg = [self imageCompressForWidthScale:signatureImage targetWidth:800];
-            [self loadImageFinished:newimg];
+//            [self loadImageFinished:newimg];
             imgdata = UIImagePNGRepresentation(newimg);
             word=@"";
             
             
-            NSArray *pointdata= handwritingView.brushPaths;
-            //数组 转 data
-            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:pointdata];
-//            NSArray *arr2 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
-            [self writePointDataToText:data];
+            NSArray *pointdataarry= handwritingView.brushPaths;
+            
+            NSString * _strjson = [iAppRevisionView brushPathWithPaths:pointdataarry];
+            [self writePointToText:_strjson];
+            [_viewcontroller CallBackWithPointData:_strjson];
             [imgdata writeToFile:filepath atomically:YES];
-
-     
         }];
     }
     else if ([[serverData objectForKey:@"mode"] isEqual:@(2)])
@@ -255,7 +258,7 @@
     NSData *jsondata = [NSJSONSerialization dataWithJSONObject:returndict options:NSJSONWritingPrettyPrinted error:nil];
     NSString *json = [[NSString alloc] initWithData:jsondata encoding:NSUTF8StringEncoding];
     [_viewcontroller CallBackPreView:json callbackID:_callbackID];
-    
+   
     [self close];
     
 }
@@ -308,6 +311,8 @@
             [_viewcontroller uploadError:@"原始签批数据读取失败" callbackID:_callbackID];
             return ;
         }
+        
+        
         NSString *newfieldvalue = [_server fieldValueWithSignatureImageData:signdata signatureRect:signatureRect userName:[serverData objectForKey:@"userName"] oldFieldValue:fieldValue];
         if (!newfieldvalue)
         {
@@ -506,18 +511,11 @@
     [data writeToFile:filepath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
--(void)writePointDataToText:(NSData *)pointdata
-{
-    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachePath = [cacPath objectAtIndex:0];
-    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",[serverData objectForKey:@"recordID"]]];
-    NSLog(@"元数据地址 %@",filepath);
-    
-    NSFileManager *filemanger = [NSFileManager defaultManager];
-    [filemanger removeItemAtPath:filepath error:nil];
-    [pointdata writeToFile:filepath atomically:YES];
-   
-}
+
+
+
+
+
 
 //读取元数据
 -(NSString *)readPointFromTxt
@@ -534,18 +532,6 @@
 }
 
 
--(NSData *)readPointDataFromFile
-{
-    NSArray *cacPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachePath = [cacPath objectAtIndex:0];
-    NSString *filepath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",[serverData objectForKey:@"recordID"]]];
-    NSLog(@"元数据地址 %@",filepath);
-    
-    NSData *data = [NSData dataWithContentsOfFile:filepath];
-    if (!data)
-        return nil;
-    return data;
-}
 
 
 - (void)loadImageFinished:(UIImage *)image

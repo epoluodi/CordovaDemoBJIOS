@@ -106,6 +106,9 @@
     
     pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errdesc];//成功
     [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
+    
+    
+    
 }
 
 -(void)CallBackPreView:(NSString *)json callbackID:(NSString *)callbackid
@@ -113,6 +116,11 @@
     CDVPluginResult* pluginResult = nil;
     pluginResult  =[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:json];//成功
     [ self.commandDelegate sendPluginResult:pluginResult callbackId:callbackid];
+    
+}
+-(void)CallBackWithPointData:(NSString *)pointdata
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setHandData('%@')",pointdata]];
 }
 #pragma mark -
 

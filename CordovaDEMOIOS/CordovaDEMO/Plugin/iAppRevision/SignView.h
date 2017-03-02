@@ -21,6 +21,9 @@
 
 //回调显示签批图片
 -(void)CallBackPreView:(NSString *)json callbackID:(NSString *)callbackid;
+
+//回传手写签批数据
+-(void)CallBackWithPointData:(NSString *)pointdata;
 @end
 @interface SignView : UIView
 {
